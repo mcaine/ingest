@@ -24,6 +24,7 @@ public class MyRoute2 extends RouteBuilder {
                 .add("au", "http://inspire.ec.europa.eu/schemas/au/4.0");
 
         from("file:E:\\Downloads\\bdline_gml3_gb\\Data?fileName=INSPIRE_AdministrativeUnit.gml&noop=true")
+                .autoStartup(false)
                 .split(xpath("//au:AdministrativeUnit", namespaces))
                 .streaming()
                 .unmarshal(jaxbDataFormat)

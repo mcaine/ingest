@@ -10,12 +10,14 @@ import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@Transactional
 @Slf4j
 @RequiredArgsConstructor
 public class AdminUnitService {
@@ -64,5 +66,9 @@ public class AdminUnitService {
         administrativeUnit.setCode(nationalCode);
         administrativeUnit.setLevel(level);
         repo.save(administrativeUnit);
+    }
+
+    public AdministrativeUnit administrativeUnitById(String id) {
+        return repo.getById(id);
     }
 }
