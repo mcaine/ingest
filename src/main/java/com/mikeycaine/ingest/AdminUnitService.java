@@ -34,60 +34,35 @@ public class AdminUnitService {
         String country = administrativeUnitType.getCountry().getCountry().getCodeListValue();
         String nationalCode = administrativeUnitType.getNationalCode();
 
+        log.info(id + " : " + country + " " + name + " " + level + " " + nationalCode);
 
-        //log.info(id + " : "+ country + " " + name + " " + level + " " + nationalCode);
-
-
-        //List<SurfacePropertyType> multi = geometry.getMultiSurface().getSurfaceMember();
         Stream<PolygonPatchType> patches = geometry.getMultiSurface().getSurfaceMember().stream()
                 .filter(spt -> spt.getAbstractSurface().getDeclaredType().equals(SurfaceType.class))
                 .flatMap(spt -> {
-                    //JAXBElement<? extends AbstractSurfaceType> el = spt.getAbstractSurface();
-                    SurfaceType surface = (SurfaceType)spt.getAbstractSurface().getValue();
+                    SurfaceType surface = (SurfaceType) spt.getAbstractSurface().getValue();
                     return surface.getPatches().getValue().getAbstractSurfacePatch().stream().map(JAXBElement::getValue)
-                            .filter(patch -> patch.getClass().equals(PolygonPatchType.class))
-                            .map(patch -> {
-                                PolygonPatchType polygonPatchType = (PolygonPatchType)patch;
-                                return polygonPatchType;
-                                //log.info(polygonPatchType.toString());
-                            });
-
+                        .filter(patch -> patch.getClass().equals(PolygonPatchType.class))
+                        .map(patch -> {
+                            PolygonPatchType polygonPatchType = (PolygonPatchType) patch;
+                            return polygonPatchType;
+                        });
                 });
 
         List<Polygon> polygons = patches.map(p -> {
-            //log.info(p.getExterior().getAbstractRing().getDeclaredType().toString() );
-
-//            if(!p.getExterior().getAbstractRing().getDeclaredType().equals(LinearRingType.class)) {
-//                throw new RuntimeException("YOUR MUM");
-//            }
-
             LinearRingType exterior = (LinearRingType) p.getExterior().getAbstractRing().getValue();
-            //LinearRing exteriorLinearRing = Util.convertLinearRingType(exterior);
-
             List<LinearRingType> interiors = p.getInterior().stream().filter(obg -> obg.getAbstractRing().getDeclaredType().equals(LinearRingType.class))
-                    .map(el -> (LinearRingType)el.getAbstractRing().getValue()).collect(Collectors.toList());
-
-            //List<LinearRing> interiorPolygons = interiors.stream().map(interior -> Util.convertLinearRingType(interior)).collect(Collectors.toList());
-            //LinearRing[] interiorPolygonsArray = interiorPolygons.toArray(new LinearRing[interiorPolygons.size()]);
-
+                    .map(el -> (LinearRingType) el.getAbstractRing().getValue()).collect(Collectors.toList());
             return Util.createPolygon(exterior, interiors);
-
-//            if (!interiors.isEmpty()) {
-//                log.info("INTERIOR of " + spelling + " HAS " + interiors.size());
-//            }
         }).collect(Collectors.toList());
 
         MultiPolygon multiPolygon = Util.createMultiPolygon(polygons);
 
-        log.info(polygons.size() + " polygons");
-
-
-
-        log.info("Perssisising...");
         AdministrativeUnit administrativeUnit = new AdministrativeUnit();
         administrativeUnit.setId(id);
         administrativeUnit.setName(name);
         administrativeUnit.setBoundary(multiPolygon);
+        administrativeUnit.setCode(nationalCode);
+        administrativeUnit.setLevel(level);
         repo.save(administrativeUnit);
     }
 }

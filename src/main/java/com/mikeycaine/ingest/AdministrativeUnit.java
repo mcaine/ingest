@@ -15,11 +15,27 @@ public class AdministrativeUnit {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "boundary")
+    @Column(name = "boundary", nullable = false)
     private MultiPolygon boundary;
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "level", nullable = false)
+    private String level;
+
+
+    @Column(name = "code", nullable = false)
+    private String code;
+
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
         return name;
@@ -29,9 +45,13 @@ public class AdministrativeUnit {
         this.name = name;
     }
 
+    public String getLevel() {
+        return level;
+    }
 
-
-
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public MultiPolygon getBoundary() {
         return boundary;
