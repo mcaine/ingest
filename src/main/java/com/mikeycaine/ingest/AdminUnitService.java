@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.opengis.gml._3.*;
 import org.isotc211._2005.gmd.LocalisedCharacterStringPropertyType;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,9 +24,13 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class AdminUnitService {
 
+    final private static int SRID = 27700;
+
     final private AdministrativeUnitRepository repo;
 
     void persistAdminstrativeUnit(AdministrativeUnitType administrativeUnitType) {
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), SRID);
+
         String id = administrativeUnitType.getId();
         MultiSurfacePropertyType geometry = administrativeUnitType.getGeometry();
         List<ReferenceType> admins = administrativeUnitType.getAdministeredBy();
@@ -36,7 +42,7 @@ public class AdminUnitService {
         String country = administrativeUnitType.getCountry().getCountry().getCodeListValue();
         String nationalCode = administrativeUnitType.getNationalCode();
 
-        log.info(id + " : " + country + " " + name + " " + level + " " + nationalCode);
+        log.info(id + " : " + country + " " + name + " (" + level + ") " + nationalCode);
 
         Stream<PolygonPatchType> patches = geometry.getMultiSurface().getSurfaceMember().stream()
                 .filter(spt -> spt.getAbstractSurface().getDeclaredType().equals(SurfaceType.class))
@@ -57,7 +63,7 @@ public class AdminUnitService {
             return Util.createPolygon(exterior, interiors);
         }).collect(Collectors.toList());
 
-        MultiPolygon multiPolygon = Util.createMultiPolygon(polygons);
+        MultiPolygon multiPolygon = geometryFactory.createMultiPolygon(GeometryFactory.toPolygonArray(polygons));
 
         AdministrativeUnit administrativeUnit = new AdministrativeUnit();
         administrativeUnit.setId(id);
@@ -65,6 +71,7 @@ public class AdminUnitService {
         administrativeUnit.setBoundary(multiPolygon);
         administrativeUnit.setCode(nationalCode);
         administrativeUnit.setLevel(level);
+
         repo.save(administrativeUnit);
     }
 

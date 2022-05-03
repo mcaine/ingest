@@ -14,14 +14,9 @@ public class Util {
         List<Double> positions = lrt.getPosList().getValue();
         int nCoords = positions.size() / 2;
 
-
-        //BigInteger dimensions = positions.getSrsDimension();
-
         Coordinate[] coordinates = new Coordinate[nCoords];
         for (int i = 0; i < nCoords; ++i) {
             coordinates[i] = new Coordinate(lrt.getPosList().getValue().get(2 * i), lrt.getPosList().getValue().get(2 * i + 1));
-//            coordinates[i].x = lrt.getPosList().getValue().get(2 * i);
-//            coordinates[i].y = lrt.getPosList().getValue().get(2 * i + 1);
         }
 
         return geometryFactory.createLinearRing(coordinates);
@@ -34,11 +29,11 @@ public class Util {
         return geometryFactory.createPolygon(exteriorLinearRing, interiorPolygonsArray);
     }
 
-    static MultiPolygon createMultiPolygon(List<Polygon> polygons) {
-        Polygon[] ary = new Polygon[polygons.size()];
-        for (int i = 0; i < polygons.size(); ++i) {
-            ary[i] = polygons.get(i);
-        }
-        return geometryFactory.createMultiPolygon(ary);
-    }
+//    static MultiPolygon createMultiPolygon(List<Polygon> polygons) {
+//        Polygon[] ary = new Polygon[polygons.size()];
+//        for (int i = 0; i < polygons.size(); ++i) {
+//            ary[i] = polygons.get(i);
+//        }
+//        return geometryFactory.createMultiPolygon(ary);
+//    }
 }

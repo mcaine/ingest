@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBContext;
 
 @Component
 @RequiredArgsConstructor
-public class MyRoute2 extends RouteBuilder {
+public class AdminBoundariesRoute extends RouteBuilder {
 
     private final AdministrativeUnitProcessor administrativeUnitProcessor;
 
@@ -24,7 +24,8 @@ public class MyRoute2 extends RouteBuilder {
                 .add("au", "http://inspire.ec.europa.eu/schemas/au/4.0");
 
         from("file:E:\\Downloads\\bdline_gml3_gb\\Data?fileName=INSPIRE_AdministrativeUnit.gml&noop=true")
-                .autoStartup(false)
+                .routeId("admin boundaries ingest")
+                .autoStartup(true)
                 .split(xpath("//au:AdministrativeUnit", namespaces))
                 .streaming()
                 .unmarshal(jaxbDataFormat)

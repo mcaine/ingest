@@ -2,20 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.mikeycaine</groupId>
 	<artifactId>ingest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ingest</name>
 	<description>Ingest OS Opendata</description>
+
 	<properties>
 		<java.version>15</java.version>
         <geotools.version>27-SNAPSHOT</geotools.version>
+        <camel.version>3.16.0</camel.version>
 	</properties>
 
     <repositories>
@@ -26,6 +30,7 @@
             <snapshots><enabled>false</enabled></snapshots>
             <releases><enabled>true</enabled></releases>
         </repository>
+
         <repository>
             <id>osgeo-snapshot</id>
             <name>OSGeo Snapshot Repository</name>
@@ -40,37 +45,34 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-spring-boot-starter</artifactId>
-			<version>3.16.0</version>
+			<version>${camel.version}</version>
 		</dependency>
+
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-zipfile</artifactId>
-            <version>3.16.0</version>
+            <version>${camel.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jaxb</artifactId>
-            <version>3.16.0</version>
+            <version>${camel.version}</version>
         </dependency>
-
-            <!--
-        <dependency>
-            <groupId>org.locationtech.jts</groupId>
-            <artifactId>jts-core</artifactId>
-            <version>1.18.2</version>
-        </dependency>
-        -->
 
         <dependency>
             <groupId>org.geotools</groupId>
@@ -90,16 +92,11 @@
             <version>${geotools.version}</version>
         </dependency>
 
-        <!-- <dependency> <groupId>org.geotools</groupId> <artifactId>gt-referencing</artifactId>
-            <version>${geotools.version}</version> </dependency> -->
-
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-epsg-hsql</artifactId>
             <version>${geotools.version}</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -135,31 +132,37 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -167,6 +170,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>
@@ -200,7 +204,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
 		</plugins>
 	</build>
