@@ -1,9 +1,9 @@
 package com.mikeycaine.ingest;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Proxy;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.MultiPolygon;
 
 import javax.persistence.Column;
@@ -24,6 +24,7 @@ public class AdministrativeUnit {
     @Column(name = "boundary", nullable = false)
     @Getter
     @Setter
+    @JsonIgnore
     private MultiPolygon boundary;
 
     @Column(name = "name", nullable = false)
