@@ -14,11 +14,9 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
