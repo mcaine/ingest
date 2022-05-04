@@ -15,7 +15,7 @@ public class Terrain50Routes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("file:" + TERR50_DATA + "?noop=true&recursive=true")
-                .routeId("unzip")
+                .routeId("terrain50 unzip")
                 .log("Unzipping ${file:path}")
                 .split(new ZipSplitter(), new TerrainFilesAggregationStrategy())
                 .streaming()
@@ -24,7 +24,7 @@ public class Terrain50Routes extends RouteBuilder {
                 .to("direct:gml50data");
 
         from("direct:gml50data")
-                .routeId("data")
+                .routeId("terrain50 data")
                 .log("Processing data from ${file:path}")
                 .process(terrain50DataProcessor);
     }
