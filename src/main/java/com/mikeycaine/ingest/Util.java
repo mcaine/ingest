@@ -26,7 +26,7 @@ public class Util {
 
     public static Polygon createPolygon(LinearRingType exterior, List<LinearRingType> interiors) {
         LinearRing exteriorLinearRing = Util.convertLinearRingType(exterior);
-        List<LinearRing> interiorPolygons = interiors.stream().map(interior -> Util.convertLinearRingType(interior)).collect(Collectors.toList());
+        List<LinearRing> interiorPolygons = interiors.stream().map(Util::convertLinearRingType).collect(Collectors.toList());
         LinearRing[] interiorPolygonsArray = interiorPolygons.toArray(new LinearRing[interiorPolygons.size()]);
         return newGeometryFactory().createPolygon(exteriorLinearRing, interiorPolygonsArray);
     }
