@@ -6,6 +6,8 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 //import static org.apache.camel.component.file.FileConstants.FILE_NAME;
 
 @Service
@@ -16,7 +18,10 @@ public class Terrain50DataProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Message in = exchange.getIn();
         String fileName = in.getHeader("CamelFileNameOnly", String.class);
-        log.info("File name is " + fileName);
+        String gridSquare = in.getHeader("GRID_SQUARE", String.class);
+        log.info("Grid Square " + gridSquare);
+        Map<String, String> messageBody = in.getBody(Map.class);
+        log.info("Size is" + messageBody.size());
 
     }
 }

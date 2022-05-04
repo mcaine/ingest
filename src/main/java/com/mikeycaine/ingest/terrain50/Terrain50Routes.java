@@ -25,7 +25,7 @@ public class Terrain50Routes extends RouteBuilder {
 
         from("direct:gml50data")
                 .routeId("data")
-                .log("Processing data from ${file:path}\n${body}")
+                .log("Processing data from ${file:path}")
                 .process(terrain50DataProcessor);
     }
 }
