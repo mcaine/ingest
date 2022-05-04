@@ -21,11 +21,12 @@ public class Terrain50Routes extends RouteBuilder {
                 .streaming()
                 .log("Unzipped ${file:name}")
                 .end()
-                .to("direct:gml50data");
+                .to("direct:terrain50data");
 
-        from("direct:gml50data")
+        from("direct:terrain50data")
                 .routeId("terrain50 data")
                 .log("Processing data from ${file:path}")
-                .process(terrain50DataProcessor);
+                .process(terrain50DataProcessor)
+                .log("GRID DATA ${body}");
     }
 }

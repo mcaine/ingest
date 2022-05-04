@@ -24,11 +24,9 @@ public class Terrain50DataProcessor implements Processor {
         Message in = exchange.getIn();
         String fileName = in.getHeader("CamelFileNameOnly", String.class);
         String gridSquare = in.getHeader("GRID_SQUARE", String.class);
-        log.info("Grid Square " + gridSquare);
         Map<String, String> messageBody = in.getBody(Map.class);
 
-        GridReader gridReader = new GridReader(gridSquare, messageBody.get("ASC"));
-        GridData gridData = gridReader.result();
+        GridData gridData = GridData.fromASC(gridSquare, messageBody.get("ASC"));
         if ("NN17".equals(gridSquare)) {// Ben Nevis
             log.info("Ben Nevis");
             for (int rowIdx = 0; rowIdx < gridData.getNRows(); ++rowIdx)
@@ -39,5 +37,7 @@ public class Terrain50DataProcessor implements Processor {
 
                 }
         }
+
+        in.setBody(gridData, GridData.class);
     }
 }
