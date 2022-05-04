@@ -1,5 +1,6 @@
-package com.mikeycaine.ingest;
+package com.mikeycaine.ingest.adminboundaries;
 
+import com.mikeycaine.ingest.adminboundaries.AdministrativeUnitProcessor;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
@@ -25,7 +26,7 @@ public class AdminBoundariesRoute extends RouteBuilder {
 
         from("file:E:\\Downloads\\bdline_gml3_gb\\Data?fileName=INSPIRE_AdministrativeUnit.gml&noop=true")
                 .routeId("admin boundaries ingest")
-                .autoStartup(true)
+                .autoStartup(false)
                 .split(xpath("//au:AdministrativeUnit", namespaces))
                 .streaming()
                 .unmarshal(jaxbDataFormat)

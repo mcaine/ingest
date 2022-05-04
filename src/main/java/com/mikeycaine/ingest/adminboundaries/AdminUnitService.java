@@ -1,5 +1,6 @@
-package com.mikeycaine.ingest;
+package com.mikeycaine.ingest.adminboundaries;
 
+import com.mikeycaine.ingest.Util;
 import eu.europa.ec.inspire.schemas.au._4.AdministrativeUnitType;
 import eu.europa.ec.inspire.schemas.gn._4.GeographicalNamePropertyType;
 import lombok.RequiredArgsConstructor;

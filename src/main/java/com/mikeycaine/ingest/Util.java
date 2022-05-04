@@ -11,7 +11,7 @@ public class Util {
     static GeometryFactory newGeometryFactory() {
         return new GeometryFactory(new PrecisionModel(), 27700);
     }
-    static LinearRing convertLinearRingType(LinearRingType lrt) {
+    public static LinearRing convertLinearRingType(LinearRingType lrt) {
         CoordinatesType coordinatesType = lrt.getCoordinates();
         List<Double> positions = lrt.getPosList().getValue();
         int nCoords = positions.size() / 2;
@@ -24,7 +24,7 @@ public class Util {
         return newGeometryFactory().createLinearRing(coordinates);
     }
 
-    static Polygon createPolygon(LinearRingType exterior, List<LinearRingType> interiors) {
+    public static Polygon createPolygon(LinearRingType exterior, List<LinearRingType> interiors) {
         LinearRing exteriorLinearRing = Util.convertLinearRingType(exterior);
         List<LinearRing> interiorPolygons = interiors.stream().map(Util::convertLinearRingType).collect(Collectors.toList());
         LinearRing[] interiorPolygonsArray = interiorPolygons.toArray(new LinearRing[interiorPolygons.size()]);

@@ -1,4 +1,4 @@
-package com.mikeycaine.ingest;
+package com.mikeycaine.ingest.adminboundaries;
 
 import lombok.RequiredArgsConstructor;
 import org.geotools.feature.DefaultFeatureCollection;

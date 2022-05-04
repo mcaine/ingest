@@ -1,4 +1,4 @@
-package com.mikeycaine.ingest;
+package com.mikeycaine.ingest.adminboundaries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
