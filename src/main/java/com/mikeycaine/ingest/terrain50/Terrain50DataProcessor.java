@@ -26,7 +26,7 @@ public class Terrain50DataProcessor implements Processor {
         String gridSquare = in.getHeader("GRID_SQUARE", String.class);
         Map<String, String> messageBody = in.getBody(Map.class);
 
-        GridData gridData = GridData.fromASC(gridSquare, messageBody.get("ASC"));
+        Terrain50Grid gridData = Terrain50Grid.fromASC(gridSquare, messageBody.get("ASC"));
         if ("NN17".equals(gridSquare)) {// Ben Nevis
             log.info("Ben Nevis");
             for (int rowIdx = 0; rowIdx < gridData.getNRows(); ++rowIdx)
@@ -38,6 +38,6 @@ public class Terrain50DataProcessor implements Processor {
                 }
         }
 
-        in.setBody(gridData, GridData.class);
+        in.setBody(gridData, Terrain50Grid.class);
     }
 }

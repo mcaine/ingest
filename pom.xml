@@ -75,6 +75,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jpa</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-main</artifactId>
             <version>${geotools.version}</version>

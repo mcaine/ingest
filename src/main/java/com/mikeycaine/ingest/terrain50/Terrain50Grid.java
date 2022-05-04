@@ -1,26 +1,50 @@
 package com.mikeycaine.ingest.terrain50;
 
 import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 import java.util.Scanner;
 
-public class GridData {
+@Entity
+@Table(name="terrain50grid")
+public class Terrain50Grid {
     @Getter
-    final private String gridSquare;
-    @Getter
-    final private int nCols;
-    @Getter
-    final private int nRows;
-    @Getter
-    final private int yllCorner;
-    @Getter
-    final private int xllCorner;
-    @Getter
-    final private int cellsize;
-    @Getter
-    final private float[][] terrainData;
+    @Setter
+    @Id
+    private String gridSquare;
 
-    public GridData(String gridSquare, int nRows, int nCols, int xllCorner, int yllCorner, int cellSize, float[][] terrainData) {
+    @Getter
+    @Setter
+    private int nCols;
+
+    @Getter
+    @Setter
+    private int nRows;
+
+    @Getter
+    @Setter
+    private int xllCorner;
+
+    @Getter
+    @Setter
+    private int yllCorner;
+
+    @Getter
+    @Setter
+    private int cellsize;
+
+    @Getter
+    @Setter
+    private float[][] terrainData;
+
+    public Terrain50Grid() {
+    }
+
+    public Terrain50Grid(String gridSquare, int nRows, int nCols, int xllCorner, int yllCorner, int cellSize, float[][] terrainData) {
         this.gridSquare = gridSquare;
         this.nRows = nRows;
         this.nCols = nCols;
@@ -30,7 +54,7 @@ public class GridData {
         this.terrainData = terrainData;
     }
 
-    public static GridData fromASC(String gridSquare, String ascString) {
+    public static Terrain50Grid fromASC(String gridSquare, String ascString) {
         int nRows = 0;
         int nCols = 0;
         int xllCorner = 0;
@@ -72,6 +96,6 @@ public class GridData {
             throw new RuntimeException("Didn't read correct number of rows");
         }
 
-        return new GridData(gridSquare, nRows, nCols, xllCorner, yllCorner, cellSize, data);
+        return new Terrain50Grid(gridSquare, nRows, nCols, xllCorner, yllCorner, cellSize, data);
     }
 }

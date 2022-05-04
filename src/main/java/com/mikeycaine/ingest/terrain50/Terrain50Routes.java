@@ -3,6 +3,7 @@ package com.mikeycaine.ingest.terrain50;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.zipfile.ZipSplitter;
+import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,8 @@ public class Terrain50Routes extends RouteBuilder {
     public void configure() throws Exception {
         from("file:" + TERR50_DATA + "?noop=true&recursive=true")
                 .routeId("terrain50 unzip")
+                .idempotentConsumer(header("CamelFileName"),
+                        MemoryIdempotentRepository.memoryIdempotentRepository(10000))
                 .log("Unzipping ${file:path}")
                 .split(new ZipSplitter(), new TerrainFilesAggregationStrategy())
                 .streaming()
@@ -27,6 +30,6 @@ public class Terrain50Routes extends RouteBuilder {
                 .routeId("terrain50 data")
                 .log("Processing data from ${file:path}")
                 .process(terrain50DataProcessor)
-                .log("GRID DATA ${body}");
+                .to("jpa:Terrain50Grid");
     }
 }
