@@ -21,7 +21,7 @@ public class AdministrativeUnit {
     @Setter
     private String id;
 
-    @Column(name = "boundary", nullable = false)
+    @Column(name = "boundary", nullable = false, columnDefinition="Geometry")
     @Getter
     @Setter
     @JsonIgnore
