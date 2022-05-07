@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name="terrain50grid")
@@ -97,5 +101,12 @@ public class Terrain50Grid {
         }
 
         return new Terrain50Grid(gridSquare, nRows, nCols, xllCorner, yllCorner, cellSize, data);
+    }
+
+    public Stream<Height> heights() {
+        return IntStream.range(0, nRows).mapToObj(i -> i)
+                .flatMap(row -> IntStream.range(0, nCols).mapToObj(
+                    col -> new Height(xllCorner + col * cellsize, yllCorner + (nRows - row) * cellsize, terrainData[row][col]))
+                );
     }
 }
