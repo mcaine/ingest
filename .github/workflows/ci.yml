@@ -26,4 +26,4 @@ jobs:
             ${{ runner.os }}-maven-    
 
       - name: Build with Maven
-        run: mvn --batch-mode clean test
+        run: mvn --batch-mode -DskipTests=true clean test
