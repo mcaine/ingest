@@ -237,11 +237,8 @@
                                     <extension>true</extension>
                                 </xsdOption>
 
-
                                 <xsdOption>
-                                    <!--<xsd>${basedir}/src/main/xsd/HydroNetwork.xsd.donotuse</xsd>-->
                                     <xsd>${basedir}/src/main/xsd/OSOpenRivers.xsd</xsd>
-                                    <!--<bindingFile>${basedir}/src/main/xjb/openrivers-bindings.xjb</bindingFile>-->
                                     <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
                                     <extension>true</extension>
                                 </xsdOption>

@@ -39,19 +39,17 @@ public class OpenRiversRoutes extends RouteBuilder {
             //.multicast()
             .to("seda:watercourselinks", "seda:hydronodes");
 
-        //from("file:" + OPENRIVERS_DATA + "&noop=true")
         from("seda:watercourselinks")
-            //.routeId("watercourselinks")
-            .autoStartup(true)
+            .routeId("watercourselinks")
+            .autoStartup(false)
             .split(xpath("//river:WatercourseLink", namespaces))
             .streaming()
             .unmarshal(jaxbDataFormat)
             .to("log:watercourselinks");
 
-        //from("file:" + OPENRIVERS_DATA + "&noop=true")
         from("seda:hydronodes")
-            //.routeId("hydronodes")
-            .autoStartup(true)
+            .routeId("hydronodes")
+            .autoStartup(false)
             .split(xpath("//river:HydroNode", namespaces))
             .streaming()
             .unmarshal(jaxbDataFormat)
