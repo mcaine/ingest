@@ -225,6 +225,13 @@
                                     <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
                                     <extension>true</extension>
                                 </xsdOption>
+
+                                <xsdOption>
+                                    <!--<xsd>${basedir}/src/main/xsd/HydroNetwork.xsd</xsd>-->
+                                    <xsd>${basedir}/src/main/xsd/OSOpenRivers.xsd</xsd>
+                                    <!--<bindingFile>${basedir}/src/main/xjb/hydronetwork-bindings.xjb</bindingFile>-->
+                                    <extension>true</extension>
+                                </xsdOption>
                             </xsdOptions>
                         </configuration>
                     </execution>
