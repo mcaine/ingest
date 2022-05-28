@@ -18,21 +18,23 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     private final Terrain50GridRepository repo;
 
     @Override
-    public void run(String...args) throws Exception {
+    public void run(String... args) throws Exception {
         log.info("Application started with command-line arguments: {}", Arrays.toString(args));
 
         log.info("Found " + repo.count() + " terrain tiles");
         if (repo.count() == 2858) { // a complete set
-            Stream.of("NN17", "NY20", "SH65").forEach(tileId -> logHighestPointInTile(tileId));
+            Stream.of(
+                "NN17",     // Ben Nevis
+                "NY20",            // Scafell Pike
+                "SH65"             // Yr Wyddfa
+            ).forEach(tileId -> logHighestPointInTile(tileId));
         }
     }
 
     void logHighestPointInTile(String tileId) {
-        repo.findById(tileId).ifPresent(tile -> {
-            OptionalDouble maxHeightOpt = tile.heights().mapToDouble(h -> h.height).max();
-            maxHeightOpt.ifPresent(maxHeight-> {
-                log.info("Max height for tile " + tile.getGridSquare() + ": " + String.format("%.1f", maxHeight) +"m");
-            });
-        });
+        repo.findById(tileId).ifPresent(tile ->
+            tile.maxHeightOpt().ifPresent(maxHeight -> {
+                log.info("Max height for tile " + tile.getGridSquare() + ": " + String.format("%.1f", maxHeight) + "m");
+            }));
     }
 }

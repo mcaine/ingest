@@ -8,10 +8,7 @@
 <body>
 
 <div class="container">
-
-    <h2>polygons</h2>
     <div id="map" class="map" tabindex="0"></div>
-
 </div>
 
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
@@ -28,7 +25,7 @@
       var polygonVectorLayer = new ol.layer.Vector({
           source: new ol.source.Vector({
         	  format: new ol.format.GeoJSON(),
-        	  url: "/boundary/osgb7000000000029638",
+        	  url: "/boundary/osgb7000000000043607",
           }),
           style: styleFunction
       });

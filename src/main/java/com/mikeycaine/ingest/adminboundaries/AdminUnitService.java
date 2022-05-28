@@ -30,6 +30,12 @@ public class AdminUnitService {
     final private AdministrativeUnitRepository repo;
 
     void persistAdminstrativeUnit(AdministrativeUnitType administrativeUnitType) {
+        AdministrativeUnit administrativeUnit = convertToOurType(administrativeUnitType);
+
+        repo.save(administrativeUnit);
+    }
+
+    private AdministrativeUnit convertToOurType(AdministrativeUnitType administrativeUnitType) {
         GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), SRID);
 
         String id = administrativeUnitType.getId();
@@ -44,6 +50,21 @@ public class AdminUnitService {
         String nationalCode = administrativeUnitType.getNationalCode();
 
         log.info(id + " : " + country + " " + name + " (" + level + ") " + nationalCode);
+
+        List<Polygon> polygons = getPolygonList(geometry);
+
+        MultiPolygon multiPolygon = geometryFactory.createMultiPolygon(GeometryFactory.toPolygonArray(polygons));
+
+        AdministrativeUnit administrativeUnit = new AdministrativeUnit();
+        administrativeUnit.setId(id);
+        administrativeUnit.setName(name);
+        administrativeUnit.setBoundary(multiPolygon);
+        administrativeUnit.setCode(nationalCode);
+        administrativeUnit.setLevel(level);
+        return administrativeUnit;
+    }
+
+    private List<Polygon> getPolygonList(MultiSurfacePropertyType geometry) {
 
         Stream<PolygonPatchType> patches = geometry.getMultiSurface().getSurfaceMember().stream()
                 .filter(spt -> spt.getAbstractSurface().getDeclaredType().equals(SurfaceType.class))
@@ -64,16 +85,7 @@ public class AdminUnitService {
             return Util.createPolygon(exterior, interiors);
         }).collect(Collectors.toList());
 
-        MultiPolygon multiPolygon = geometryFactory.createMultiPolygon(GeometryFactory.toPolygonArray(polygons));
-
-        AdministrativeUnit administrativeUnit = new AdministrativeUnit();
-        administrativeUnit.setId(id);
-        administrativeUnit.setName(name);
-        administrativeUnit.setBoundary(multiPolygon);
-        administrativeUnit.setCode(nationalCode);
-        administrativeUnit.setLevel(level);
-
-        repo.save(administrativeUnit);
+        return polygons;
     }
 
     public AdministrativeUnit administrativeUnitById(String id) {
