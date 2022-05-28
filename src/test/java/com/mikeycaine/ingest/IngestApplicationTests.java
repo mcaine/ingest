@@ -3,10 +3,10 @@ package com.mikeycaine.ingest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest
 class IngestApplicationTests {
 
-	//@Test
+	@Test
 	void contextLoads() {
 	}
 

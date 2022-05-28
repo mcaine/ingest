@@ -38,6 +38,8 @@
             <snapshots><enabled>true</enabled></snapshots>
             <releases><enabled>false</enabled></releases>
         </repository>
+
+
     </repositories>
 
 	<dependencies>
@@ -123,12 +125,13 @@
         </dependency>
 
 
-
+<!--
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
+        -->
 
         <!--
         <dependency>
@@ -142,6 +145,13 @@
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>4.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>4.0.0-M4</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!--
@@ -220,16 +230,19 @@
                         </goals>
                         <configuration>
                             <xsdOptions>
+
                                 <xsdOption>
                                     <xsd>${basedir}/src/main/xsd/AdministrativeUnits.xsd</xsd>
                                     <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
                                     <extension>true</extension>
                                 </xsdOption>
 
+
                                 <xsdOption>
-                                    <!--<xsd>${basedir}/src/main/xsd/HydroNetwork.xsd</xsd>-->
+                                    <!--<xsd>${basedir}/src/main/xsd/HydroNetwork.xsd.donotuse</xsd>-->
                                     <xsd>${basedir}/src/main/xsd/OSOpenRivers.xsd</xsd>
-                                    <!--<bindingFile>${basedir}/src/main/xjb/hydronetwork-bindings.xjb</bindingFile>-->
+                                    <!--<bindingFile>${basedir}/src/main/xjb/openrivers-bindings.xjb</bindingFile>-->
+                                    <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
                                     <extension>true</extension>
                                 </xsdOption>
                             </xsdOptions>

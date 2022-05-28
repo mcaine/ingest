@@ -2,7 +2,7 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmlxbt="http://www.opengis.net/gml/3.3/xbt" xmlns:hy-n="urn:x-inspire:specification:gmlas:HydroNetwork:3.0" xmlns:river="http://namespaces.os.uk/Open/Rivers/1.0" xmlns:os="http://namespaces.os.uk/product/1.0" targetNamespace="http://namespaces.os.uk/Open/Rivers/1.0" elementFormDefault="qualified" version="1.0">
 	<import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
 	<import namespace="http://www.opengis.net/gml/3.3/xbt" schemaLocation="http://schemas.opengis.net/gml/3.3/extdBaseTypes.xsd"/>
-	<import namespace="urn:x-inspire:specification:gmlas:HydroNetwork:3.0" schemaLocation="http://inspire.ec.europa.eu/schemas/hy-n/3.0/HydroNetwork.xsd"/>
+	<import namespace="urn:x-inspire:specification:gmlas:HydroNetwork:3.0" schemaLocation="https://inspire.ec.europa.eu/schemas/2021.1/hy-n/3.0/HydroNetwork.xsd"/>
 	<import namespace="http://namespaces.os.uk/product/1.0" schemaLocation="https://www.ordnancesurvey.co.uk/xml/schema/product/1.0/OSProduct.xsd"/>
 	<!--XML Schema document created by ShapeChange - http://shapechange.net/-->
 	<element name="HydroNode" type="river:HydroNodeType" substitutionGroup="hy-n:HydroNode">
