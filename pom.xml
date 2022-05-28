@@ -210,7 +210,7 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-xjc-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.2</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
