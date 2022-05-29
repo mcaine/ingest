@@ -18,8 +18,12 @@ public class OpenMapLocalFeatureCollectionProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         Message in = exchange.getIn();
-        FeatureCollectionType fct = in.getBody(FeatureCollectionType.class);
 
+        String fileName = in.getHeader("CamelFileNameOnly", String.class);
+        String gridSquare = fileName.substring(0,2).toUpperCase();
+        in.setHeader("GRID_SQUARE", gridSquare);
+
+        FeatureCollectionType fct = in.getBody(FeatureCollectionType.class);
         List<AbstractFeatureType> featureList = fct.getFeatureMember().stream().map(fpt -> fpt.getAbstractFeature().getValue()).collect(Collectors.toList());
         in.setBody(featureList, List.class);
     }

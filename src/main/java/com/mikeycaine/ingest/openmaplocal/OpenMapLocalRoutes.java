@@ -19,7 +19,6 @@ import javax.xml.bind.JAXBException;
 public class OpenMapLocalRoutes extends RouteBuilder {
 
     private final OpenMapLocalFeatureCollectionProcessor openMapLocalFeatureCollectionProcessor;
-//    private final HydroNodeProcessor hydroNodeProcessor;
 
     final static String OPENMAPLOCAL_DATA = "E:\\Downloads\\opmplc_gml3_gb\\data";
 
@@ -28,8 +27,6 @@ public class OpenMapLocalRoutes extends RouteBuilder {
         from("file:" + OPENMAPLOCAL_DATA + "?noop=true&recursive=true")
             .routeId("openmaplocal")
             .autoStartup(true)
-//            .idempotentConsumer(header("CamelFileName"),
-//                MemoryIdempotentRepository.memoryIdempotentRepository(1000))
             .log("OpenMapLocal ${file:path}")
             .unmarshal(jaxbDataFormat())
             .process(openMapLocalFeatureCollectionProcessor)
@@ -77,7 +74,7 @@ public class OpenMapLocalRoutes extends RouteBuilder {
                 .when(simple("${body} is 'uk.os.namespaces.open.oml._1.MotorwayJunctionType'"))
                     .to("direct:motorwayjunction")
                 .otherwise()
-                    .to("direct:unknown");
+                    .to("log:unknown");
 
         from("direct:buildings").stop();
         from("direct:surfacewaterline").stop();
@@ -99,19 +96,14 @@ public class OpenMapLocalRoutes extends RouteBuilder {
         from("direct:roadtunnel").stop();
         from("direct:glasshouse").stop();
         from("direct:motorwayjunction").stop();
-
-        from("direct:unknown").to("log:unknown");
     }
 
     private JaxbDataFormat jaxbDataFormat() throws JAXBException {
         JaxbDataFormat jaxbDataFormat = new JaxbDataFormat();
-
-        JAXBContext jaxbContext = JAXBContext.newInstance(
+        jaxbDataFormat.setContext(JAXBContext.newInstance(
             uk.os.namespaces.open.oml._1.ObjectFactory.class,
             uk.os.namespaces.product._1.ObjectFactory.class
-        );
-
-        jaxbDataFormat.setContext(jaxbContext);
+        ));
         return jaxbDataFormat;
     }
 }
