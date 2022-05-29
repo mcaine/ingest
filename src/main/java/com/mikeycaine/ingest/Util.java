@@ -1,6 +1,8 @@
 package com.mikeycaine.ingest;
 
 import net.opengis.gml._3.CoordinatesType;
+import net.opengis.gml._3.DirectPositionListType;
+import net.opengis.gml._3.LineStringType;
 import net.opengis.gml._3.LinearRingType;
 import org.locationtech.jts.geom.*;
 
@@ -30,5 +32,19 @@ public class Util {
         LinearRing[] interiorPolygonsArray = interiorPolygons.toArray(new LinearRing[interiorPolygons.size()]);
 
         return newGeometryFactory().createPolygon(exteriorLinearRing, interiorPolygonsArray);
+    }
+
+    public static LineString convertLineString(LineStringType lst) {
+        DirectPositionListType dplt = lst.getPosList();
+        if (dplt == null) {
+            throw new RuntimeException("No pos list");
+        }
+        List<Double> values = dplt.getValue();
+        int nCoords = values.size() / 2;
+        Coordinate[] coordinates = new Coordinate[nCoords];
+        for (int i = 0; i < nCoords; ++i) {
+            coordinates[i] = new Coordinate(values.get(2 * i), values.get(2 * i + 1));
+        }
+        return newGeometryFactory().createLineString(coordinates);
     }
 }

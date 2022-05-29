@@ -36,16 +36,18 @@ public class OpenRiversRoutes extends RouteBuilder {
             .add("river", "http://namespaces.os.uk/Open/Rivers/1.0");
 
         from("file:" + OPENRIVERS_DATA + "&noop=true")
-            //.multicast()
+            .multicast()
             .to("seda:watercourselinks", "seda:hydronodes");
 
         from("seda:watercourselinks")
             .routeId("watercourselinks")
-            .autoStartup(false)
+            .autoStartup(true)
             .split(xpath("//river:WatercourseLink", namespaces))
             .streaming()
             .unmarshal(jaxbDataFormat)
-            .to("log:watercourselinks");
+            .process(watercourseLinkProcessor)
+            .to("jpa:WatercourseLink");
+            //.to("log:watercourselinks");
 
         from("seda:hydronodes")
             .routeId("hydronodes")
@@ -53,6 +55,7 @@ public class OpenRiversRoutes extends RouteBuilder {
             .split(xpath("//river:HydroNode", namespaces))
             .streaming()
             .unmarshal(jaxbDataFormat)
-            .to("log:hydronodes");
+            .process(hydroNodeProcessor);
+            //.to("log:hydronodes");
     }
 }
