@@ -47,4 +47,9 @@ public class Util {
         }
         return newGeometryFactory().createLineString(coordinates);
     }
+
+    public static Point pointFrom(Double x, Double y) {
+        return newGeometryFactory().createPoint(new Coordinate(x,y));
+    }
+
 }

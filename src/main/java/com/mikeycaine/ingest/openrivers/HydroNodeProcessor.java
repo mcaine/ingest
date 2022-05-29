@@ -1,5 +1,6 @@
 package com.mikeycaine.ingest.openrivers;
 
+import com.mikeycaine.ingest.Util;
 import lombok.extern.slf4j.Slf4j;
 
 import inspire.x.specification.gmlas.hydronetwork._3.HydroNodeType.HydroNodeCategory;
@@ -8,6 +9,7 @@ import net.opengis.gml._3.PointPropertyType;
 import net.opengis.gml._3.PointType;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import uk.os.namespaces.open.rivers._1.HydroNodeType;
 
@@ -24,22 +26,24 @@ public class HydroNodeProcessor implements Processor {
             throw new RuntimeException("null hydro node body");
         }
 
+        String id = hydroNodeType.getId();
+
         String nodeCategory = Optional.ofNullable(hydroNodeType.getHydroNodeCategory())
             .flatMap(hnc -> Optional.ofNullable(hnc.getValue()))
-            .orElse("???");
+            .orElse(null);
 
         Optional<List<Double>> posnValues = Optional.ofNullable(hydroNodeType.getGeometry())
             .flatMap(geom -> Optional.ofNullable(geom.getPoint()))
             .flatMap(pt -> Optional.ofNullable(pt.getPos()))
             .flatMap(dp -> Optional.ofNullable(dp.getValue()));
 
-        System.out.print(nodeCategory + " ");
-
+        Point location = null;
         if (posnValues.isPresent()) {
             List<Double> xy = posnValues.get();
-            System.out.println(xy.get(0) + " " + xy.get(1));
-        } else {
-            System.out.println("NONE");
+            location = Util.pointFrom(xy.get(0), xy.get(1));
         }
+
+        HydroNode hydroNode = new HydroNode(id, nodeCategory, location);
+        exchange.getIn().setBody(hydroNode, HydroNode.class);
     }
 }
