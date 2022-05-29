@@ -21,6 +21,7 @@ public class OpenMapLocalRoutes extends RouteBuilder {
     private final OpenMapLocalFeatureCollectionProcessor openMapLocalFeatureCollectionProcessor;
 
     private final RailwayStationProcessor railwayStationProcessor;
+    private final RailwayTrackProcessor railwayTrackProcessor;
 
     final static String OPENMAPLOCAL_DATA = "E:\\Downloads\\opmplc_gml3_gb\\data";
 
@@ -90,7 +91,7 @@ public class OpenMapLocalRoutes extends RouteBuilder {
         from("direct:carchargingpoint").stop();
         from("direct:functionalsite").stop();
         from("direct:importantbuilding").stop();
-        from("direct:railwaytrack").stop();
+        from("direct:railwaytrack").process(railwayTrackProcessor).to("jpa:RailwayTrack");
         from("direct:roundabout").stop();
         from("direct:electricitytransmissionline").stop();
         from("direct:railwaystation").process(railwayStationProcessor).to("jpa:RailwayStation");
