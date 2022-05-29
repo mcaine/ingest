@@ -242,6 +242,14 @@
                                     <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
                                     <extension>true</extension>
                                 </xsdOption>
+
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/xsd/OSOpenMapLocal.xsd</xsd>
+                                    <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
+                                    <extension>true</extension>
+                                </xsdOption>
+
+
                             </xsdOptions>
                         </configuration>
                     </execution>
