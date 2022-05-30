@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Rivers Demo</title>
+    <title>Railways</title>
     <link href="css/style.css" rel="stylesheet" media="screen"/>
 </head>
 
@@ -25,14 +25,9 @@
       var polygonVectorLayer = new ol.layer.Vector({
           source: new ol.source.Vector({
         	  format: new ol.format.GeoJSON(),
-        	  url: "/river/River%20Tyne",
+        	  url: "/railways",
           }),
-          style: new ol.style.Style({
-          stroke: new ol.style.Stroke({
-            color: 'blue',
-            width: 3
-          })
-        })
+          style: railwayStyleFunction
       });
 
       var map = new ol.Map({

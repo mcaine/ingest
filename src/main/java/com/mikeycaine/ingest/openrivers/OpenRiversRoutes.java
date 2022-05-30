@@ -22,6 +22,7 @@ public class OpenRiversRoutes extends RouteBuilder {
     public void configure() throws Exception {
         from("file:" + OPENRIVERS_DATA + "&noop=true")
             .routeId("openrivers")
+            .autoStartup(false)
             .log("OpenRivers ${file:path}")
             .unmarshal(jaxbDataFormat())
             .process(openRiversFeatureCollectionProcessor)
