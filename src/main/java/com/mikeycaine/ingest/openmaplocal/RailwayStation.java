@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class RailwayStation {
 
-
     @Id
     @Getter
     @Setter
