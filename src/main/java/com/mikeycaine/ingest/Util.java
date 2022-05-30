@@ -1,12 +1,10 @@
 package com.mikeycaine.ingest;
 
-import net.opengis.gml._3.CoordinatesType;
-import net.opengis.gml._3.DirectPositionListType;
-import net.opengis.gml._3.LineStringType;
-import net.opengis.gml._3.LinearRingType;
+import net.opengis.gml._3.*;
 import org.locationtech.jts.geom.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Util {
@@ -52,4 +50,11 @@ public class Util {
         return newGeometryFactory().createPoint(new Coordinate(x,y));
     }
 
+    public static Point pointFromDirectPositionOption(Optional<DirectPositionType> dpOption) {
+        return dpOption.flatMap(dp -> Optional.ofNullable(dp.getValue())).map(dp -> {
+            Double x = dp.get(0);
+            Double y = dp.get(1);
+            return Util.pointFrom(x,y);
+        }).orElse(null);
+    }
 }
