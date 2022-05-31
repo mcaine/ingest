@@ -19,9 +19,9 @@ import javax.xml.bind.JAXBException;
 public class OpenMapLocalRoutes extends RouteBuilder {
 
     private final OpenMapLocalFeatureCollectionProcessor openMapLocalFeatureCollectionProcessor;
-
     private final RailwayStationProcessor railwayStationProcessor;
     private final RailwayTrackProcessor railwayTrackProcessor;
+    private final RailwayTunnelProcessor railwayTunnelProcessor;
 
     final static String OPENMAPLOCAL_DATA = "E:\\Downloads\\opmplc_gml3_gb\\data";
 
@@ -95,7 +95,7 @@ public class OpenMapLocalRoutes extends RouteBuilder {
         from("direct:roundabout").stop();
         from("direct:electricitytransmissionline").stop();
         from("direct:railwaystation").process(railwayStationProcessor).to("jpa:RailwayStation");
-        from("direct:railwaytunnel").stop();
+        from("direct:railwaytunnel").process(railwayTunnelProcessor).to("jpa:RailwayTunnel");
         from("direct:roadtunnel").stop();
         from("direct:glasshouse").stop();
         from("direct:motorwayjunction").stop();

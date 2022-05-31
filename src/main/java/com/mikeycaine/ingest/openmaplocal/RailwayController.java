@@ -31,20 +31,26 @@ public class RailwayController {
 
     private final RailwayStationRepository railwayStationRepository;
     private final RailwayTrackRepository railwayTrackRepository;
+    private final RailwayTunnelRepository railwayTunnelRepository;
 
     @GetMapping("/railways")
     public String railways() throws FactoryException, IOException {
         List<RailwayTrack> tracks = railwayTrackRepository.findAll();
         List<RailwayStation> stations = railwayStationRepository.findAll();
+        List<RailwayTunnel> tunnels = railwayTunnelRepository.findAll();
 
-        return railwayFeaturesJson(tracks, stations);
+        return railwayFeaturesJson(tracks, stations, tunnels);
     }
 
-    private String railwayFeaturesJson(List<RailwayTrack> tracks, List<RailwayStation> stations) throws IOException, FactoryException {
+    private String railwayFeaturesJson(
+        List<RailwayTrack> tracks,
+        List<RailwayStation> stations,
+        List<RailwayTunnel> tunnels) throws IOException, FactoryException {
         DefaultFeatureCollection featureCollection = new DefaultFeatureCollection(null, null);
 
         addTracksToFeatureCollection(tracks, featureCollection);
         addStationsToFeatureCollection(stations, featureCollection);
+        addTunnelsToFeatureCollection(tunnels, featureCollection);
 
 
         FeatureJSON fj = new FeatureJSON();
@@ -57,6 +63,28 @@ public class RailwayController {
         return os.toString();
     }
 
+    private void addTunnelsToFeatureCollection(List<RailwayTunnel> tunnels, DefaultFeatureCollection featureCollection) throws FactoryException {
+        CoordinateReferenceSystem osgbCrs = CRS.decode(crs);
+
+        SimpleFeatureTypeBuilder railwayTunnelfeatureTypeBuilder = new SimpleFeatureTypeBuilder();
+        railwayTunnelfeatureTypeBuilder.setName("Railway Tunnel");
+        railwayTunnelfeatureTypeBuilder.setCRS(osgbCrs);
+        railwayTunnelfeatureTypeBuilder.add("id", String.class);
+        railwayTunnelfeatureTypeBuilder.add("what", String.class);
+        railwayTunnelfeatureTypeBuilder.add("lineString", LineString.class);
+
+        final SimpleFeatureType railwayTunnelFeatureType = railwayTunnelfeatureTypeBuilder.buildFeatureType();
+
+        for (RailwayTunnel tunnel: tunnels) {
+            SimpleFeatureBuilder railwayTrackfeatureBuilder = new SimpleFeatureBuilder(railwayTunnelFeatureType);
+            railwayTrackfeatureBuilder.add(tunnel.getId());
+            railwayTrackfeatureBuilder.add("track");
+            railwayTrackfeatureBuilder.add(tunnel.getLineString());
+            SimpleFeature feature = railwayTrackfeatureBuilder.buildFeature(tunnel.getId());
+            featureCollection.add(feature);
+        }
+    }
+
     void addStationsToFeatureCollection(Collection<RailwayStation> stations, DefaultFeatureCollection featureCollection) throws FactoryException {
         CoordinateReferenceSystem osgbCrs = CRS.decode(crs);
 
@@ -65,6 +93,7 @@ public class RailwayController {
         railwayTrackfeatureTypeBuilder.setCRS(osgbCrs);
         railwayTrackfeatureTypeBuilder.add("id", String.class);
         railwayTrackfeatureTypeBuilder.add("name", String.class);
+        railwayTrackfeatureTypeBuilder.add("what", String.class);
         railwayTrackfeatureTypeBuilder.add("location", Point.class);
 
         final SimpleFeatureType railwayTrackFeatureType = railwayTrackfeatureTypeBuilder.buildFeatureType();
@@ -73,6 +102,7 @@ public class RailwayController {
             SimpleFeatureBuilder railwayTrackfeatureBuilder = new SimpleFeatureBuilder(railwayTrackFeatureType);
             railwayTrackfeatureBuilder.add(station.getId());
             railwayTrackfeatureBuilder.add(station.getName());
+            railwayTrackfeatureBuilder.add("station");
             railwayTrackfeatureBuilder.add(station.getLocation());
             SimpleFeature feature = railwayTrackfeatureBuilder.buildFeature(station.getId());
             featureCollection.add(feature);
@@ -86,6 +116,7 @@ public class RailwayController {
         railwayTrackfeatureTypeBuilder.setName("Railway Track");
         railwayTrackfeatureTypeBuilder.setCRS(osgbCrs);
         railwayTrackfeatureTypeBuilder.add("id", String.class);
+        railwayTrackfeatureTypeBuilder.add("what", String.class);
         railwayTrackfeatureTypeBuilder.add("lineString", LineString.class);
 
         final SimpleFeatureType railwayTrackFeatureType = railwayTrackfeatureTypeBuilder.buildFeatureType();
@@ -93,6 +124,7 @@ public class RailwayController {
         for (RailwayTrack track: tracks) {
             SimpleFeatureBuilder railwayTrackfeatureBuilder = new SimpleFeatureBuilder(railwayTrackFeatureType);
             railwayTrackfeatureBuilder.add(track.getId());
+            railwayTrackfeatureBuilder.add("track");
             railwayTrackfeatureBuilder.add(track.getLineString());
             SimpleFeature feature = railwayTrackfeatureBuilder.buildFeature(track.getId());
             featureCollection.add(feature);
