@@ -1,8 +1,15 @@
 package com.mikeycaine.ingest;
 
 import net.opengis.gml._3.*;
+import org.geotools.feature.DefaultFeatureCollection;
+import org.geotools.geojson.feature.FeatureJSON;
+import org.geotools.referencing.CRS;
 import org.locationtech.jts.geom.*;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,5 +63,19 @@ public class Util {
             Double y = dp.get(1);
             return Util.pointFrom(x,y);
         }).orElse(null);
+    }
+
+    public static String featureCollectionAsString(DefaultFeatureCollection featureCollection) throws IOException {
+        FeatureJSON fj = new FeatureJSON();
+        fj.setEncodeFeatureCRS(true);
+
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            fj.writeFeatureCollection(featureCollection, os);
+            return os.toString();
+        }
+    }
+
+    public static CoordinateReferenceSystem crs(String crsName) throws FactoryException {
+        return CRS.decode(crsName);
     }
 }

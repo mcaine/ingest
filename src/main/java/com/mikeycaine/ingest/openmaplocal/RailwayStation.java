@@ -1,5 +1,7 @@
 package com.mikeycaine.ingest.openmaplocal;
 
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+//import com.mikeycaine.ingest.GeometrySerializerForLocationTech;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +30,7 @@ public class RailwayStation {
     @Getter
     @Setter
     @Column(name = "location", nullable = false, columnDefinition="Geometry")
+    //@JsonSerialize(using = GeometrySerializerForLocationTech.class)
     private Point location;
 
     public RailwayStation(String id, String name, Point location) {

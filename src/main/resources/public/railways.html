@@ -18,35 +18,33 @@
 
 <script src="js/styles.js"></script>
 <script src="js/projections.js"></script>
+<script src="js/railways.js"></script>
 
 <script>
-      ol.proj.proj4.register(proj4);
+      //ol.proj.proj4.register(proj4);
 
-      var polygonVectorLayer = new ol.layer.Vector({
-          source: new ol.source.Vector({
-        	  format: new ol.format.GeoJSON(),
-        	  url: "/railways",
-          }),
-          style: railwayStyleFunction
-      });
-
-      var map = new ol.Map({
+      let map = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
           }),
-          polygonVectorLayer
+          railwayTunnelsLayer,
+          railwayTracksLayer,
+          railwayStationsLayer
         ],
+
         target: 'map',
         controls: ol.control.defaults({
           attributionOptions: ({
             collapsible: false
           })
         }),
+
         view: new ol.View({
           center: [0, 8000000],
           zoom: 5
         })
+
       });
     </script>
 </body>

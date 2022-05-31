@@ -73,19 +73,3 @@
       var styleFunction = function(feature) {
         return styles[feature.getGeometry().getType()];
       };
-
-      var stationImage = new ol.style.Circle({
-        radius: 5,
-        fill: null,
-        stroke: new ol.style.Stroke({color: 'red', width: 1})
-      });
-
-      var railwayStyles = {
-        'Point': new ol.style.Style({image: stationImage}),
-        'LineString': new ol.style.Style({
-            stroke: new ol.style.Stroke({color: 'black', width: 2})})
-      };
-
-      var railwayStyleFunction = function(feature) {
-        return railwayStyles[feature.getGeometry().getType()];
-      };

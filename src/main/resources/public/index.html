@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Polygon Demo</title>
+    <title>Administrative Units</title>
     <link href="css/style.css" rel="stylesheet" media="screen"/>
 </head>
 
@@ -25,7 +25,7 @@
       var polygonVectorLayer = new ol.layer.Vector({
           source: new ol.source.Vector({
         	  format: new ol.format.GeoJSON(),
-        	  url: "/boundary/osgb7000000000043607",
+        	  url: "/boundary/osgb7000000000011039",
           }),
           style: styleFunction
       });
@@ -33,7 +33,7 @@
       var map = new ol.Map({
         layers: [
           new ol.layer.Tile({
-            source: new ol.source.OSM({url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'})
+            source: new ol.source.OSM()
           }),
           polygonVectorLayer
         ],
