@@ -6,7 +6,8 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.OptionalDouble;
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -101,14 +102,14 @@ public class Terrain50Grid {
         return new Terrain50Grid(gridSquare, nRows, nCols, xllCorner, yllCorner, cellSize, data);
     }
 
-    public Stream<Height> heights() {
+    public Stream<HeightAtPosition> heights() {
         return IntStream.range(0, nRows).mapToObj(Integer::valueOf)
                 .flatMap(rowIdx -> IntStream.range(0, nCols).mapToObj(
-                    colIdx -> new Height(xllCorner + colIdx * cellsize, yllCorner + (nRows - rowIdx) * cellsize, terrainData[rowIdx][colIdx]))
+                    colIdx -> new HeightAtPosition(xllCorner + colIdx * cellsize, yllCorner + (nRows - rowIdx - 1) * cellsize, terrainData[rowIdx][colIdx], gridSquare))
                 );
     }
 
-    public OptionalDouble maxHeightOpt() {
-        return this.heights().mapToDouble(h -> h.height).max();
+    public Optional<HeightAtPosition> maxHeightOpt() {
+        return this.heights().sorted(Comparator.reverseOrder()).findFirst();
     }
 }

@@ -34,7 +34,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     void logHighestPointInTile(String tileId) {
         repo.findById(tileId).ifPresent(tile ->
             tile.maxHeightOpt().ifPresent(maxHeight -> {
-                log.info("Max height for tile " + tile.getGridSquare() + ": " + String.format("%.1f", maxHeight) + "m");
+                log.info("Max height for tile " + tile.getGridSquare() + ": " + maxHeight);
             }));
     }
 }
