@@ -66,21 +66,21 @@ public class RailwayController {
     private void addTunnelsToFeatureCollection(List<RailwayTunnel> tunnels, DefaultFeatureCollection featureCollection) throws FactoryException {
         CoordinateReferenceSystem osgbCrs = CRS.decode(crs);
 
-        SimpleFeatureTypeBuilder railwayTunnelfeatureTypeBuilder = new SimpleFeatureTypeBuilder();
-        railwayTunnelfeatureTypeBuilder.setName("Railway Tunnel");
-        railwayTunnelfeatureTypeBuilder.setCRS(osgbCrs);
-        railwayTunnelfeatureTypeBuilder.add("id", String.class);
-        railwayTunnelfeatureTypeBuilder.add("what", String.class);
-        railwayTunnelfeatureTypeBuilder.add("lineString", LineString.class);
+        SimpleFeatureTypeBuilder ftb = new SimpleFeatureTypeBuilder();
+        ftb.setName("Railway Tunnel");
+        ftb.setCRS(osgbCrs);
+        ftb.add("id", String.class);
+        ftb.add("what", String.class);
+        ftb.add("lineString", LineString.class);
 
-        final SimpleFeatureType railwayTunnelFeatureType = railwayTunnelfeatureTypeBuilder.buildFeatureType();
+        final SimpleFeatureType ft = ftb.buildFeatureType();
 
         for (RailwayTunnel tunnel: tunnels) {
-            SimpleFeatureBuilder railwayTrackfeatureBuilder = new SimpleFeatureBuilder(railwayTunnelFeatureType);
-            railwayTrackfeatureBuilder.add(tunnel.getId());
-            railwayTrackfeatureBuilder.add("track");
-            railwayTrackfeatureBuilder.add(tunnel.getLineString());
-            SimpleFeature feature = railwayTrackfeatureBuilder.buildFeature(tunnel.getId());
+            SimpleFeatureBuilder fb = new SimpleFeatureBuilder(ft);
+            fb.add(tunnel.getId());
+            fb.add("tunnel");
+            fb.add(tunnel.getLineString());
+            SimpleFeature feature = fb.buildFeature(tunnel.getId());
             featureCollection.add(feature);
         }
     }
@@ -88,23 +88,23 @@ public class RailwayController {
     void addStationsToFeatureCollection(Collection<RailwayStation> stations, DefaultFeatureCollection featureCollection) throws FactoryException {
         CoordinateReferenceSystem osgbCrs = CRS.decode(crs);
 
-        SimpleFeatureTypeBuilder railwayTrackfeatureTypeBuilder = new SimpleFeatureTypeBuilder();
-        railwayTrackfeatureTypeBuilder.setName("Railway Station");
-        railwayTrackfeatureTypeBuilder.setCRS(osgbCrs);
-        railwayTrackfeatureTypeBuilder.add("id", String.class);
-        railwayTrackfeatureTypeBuilder.add("name", String.class);
-        railwayTrackfeatureTypeBuilder.add("what", String.class);
-        railwayTrackfeatureTypeBuilder.add("location", Point.class);
+        SimpleFeatureTypeBuilder ftb = new SimpleFeatureTypeBuilder();
+        ftb.setName("Railway Station");
+        ftb.setCRS(osgbCrs);
+        ftb.add("id", String.class);
+        ftb.add("name", String.class);
+        ftb.add("what", String.class);
+        ftb.add("location", Point.class);
 
-        final SimpleFeatureType railwayTrackFeatureType = railwayTrackfeatureTypeBuilder.buildFeatureType();
+        final SimpleFeatureType ft = ftb.buildFeatureType();
 
         for (RailwayStation station: stations) {
-            SimpleFeatureBuilder railwayTrackfeatureBuilder = new SimpleFeatureBuilder(railwayTrackFeatureType);
-            railwayTrackfeatureBuilder.add(station.getId());
-            railwayTrackfeatureBuilder.add(station.getName());
-            railwayTrackfeatureBuilder.add("station");
-            railwayTrackfeatureBuilder.add(station.getLocation());
-            SimpleFeature feature = railwayTrackfeatureBuilder.buildFeature(station.getId());
+            SimpleFeatureBuilder fb = new SimpleFeatureBuilder(ft);
+            fb.add(station.getId());
+            fb.add(station.getName());
+            fb.add("station");
+            fb.add(station.getLocation());
+            SimpleFeature feature = fb.buildFeature(station.getId());
             featureCollection.add(feature);
         }
     }
@@ -112,21 +112,21 @@ public class RailwayController {
     void addTracksToFeatureCollection(Collection<RailwayTrack> tracks, DefaultFeatureCollection featureCollection) throws FactoryException {
         CoordinateReferenceSystem osgbCrs = CRS.decode(crs);
 
-        SimpleFeatureTypeBuilder railwayTrackfeatureTypeBuilder = new SimpleFeatureTypeBuilder();
-        railwayTrackfeatureTypeBuilder.setName("Railway Track");
-        railwayTrackfeatureTypeBuilder.setCRS(osgbCrs);
-        railwayTrackfeatureTypeBuilder.add("id", String.class);
-        railwayTrackfeatureTypeBuilder.add("what", String.class);
-        railwayTrackfeatureTypeBuilder.add("lineString", LineString.class);
+        SimpleFeatureTypeBuilder ftb = new SimpleFeatureTypeBuilder();
+        ftb.setName("Railway Track");
+        ftb.setCRS(osgbCrs);
+        ftb.add("id", String.class);
+        ftb.add("what", String.class);
+        ftb.add("lineString", LineString.class);
 
-        final SimpleFeatureType railwayTrackFeatureType = railwayTrackfeatureTypeBuilder.buildFeatureType();
+        final SimpleFeatureType ft = ftb.buildFeatureType();
 
         for (RailwayTrack track: tracks) {
-            SimpleFeatureBuilder railwayTrackfeatureBuilder = new SimpleFeatureBuilder(railwayTrackFeatureType);
-            railwayTrackfeatureBuilder.add(track.getId());
-            railwayTrackfeatureBuilder.add("track");
-            railwayTrackfeatureBuilder.add(track.getLineString());
-            SimpleFeature feature = railwayTrackfeatureBuilder.buildFeature(track.getId());
+            SimpleFeatureBuilder fb = new SimpleFeatureBuilder(ft);
+            fb.add(track.getId());
+            fb.add("track");
+            fb.add(track.getLineString());
+            SimpleFeature feature = fb.buildFeature(track.getId());
             featureCollection.add(feature);
         }
     }
