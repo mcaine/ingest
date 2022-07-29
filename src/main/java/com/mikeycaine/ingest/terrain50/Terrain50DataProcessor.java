@@ -15,12 +15,9 @@ public class Terrain50DataProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         Message in = exchange.getIn();
-        String fileName = in.getHeader("CamelFileNameOnly", String.class);
-        String gridSquare = in.getHeader("GRID_SQUARE", String.class);
+        String gridSquare = in.getHeader("zipFileName", String.class).substring(0,4).toUpperCase();
+        String messageBody = in.getBody(String.class);
 
-        Map<String, String> messageBody = in.getBody(Map.class);
-        String ascFileText = messageBody.get("ASC");
-
-        in.setBody(Terrain50Grid.fromASC(gridSquare, ascFileText), Terrain50Grid.class);
+        in.setBody(Terrain50Grid.fromASC(gridSquare, messageBody), Terrain50Grid.class);
     }
 }

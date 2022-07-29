@@ -17,19 +17,15 @@ public class Terrain50Routes extends RouteBuilder {
     public void configure() throws Exception {
         from("file:" + TERR50_DATA + "?noop=true&recursive=true")
                 .routeId("terrain50 unzip")
-                .autoStartup(false)
+                .autoStartup(true)
                 .idempotentConsumer(header("CamelFileName"),
                         MemoryIdempotentRepository.memoryIdempotentRepository(10000))
-                .log("Unzipping ${file:path}")
-                .split(new ZipSplitter(), new TerrainFilesAggregationStrategy())
+                //.log("Unzipping ${file:path}")
+                .split(new ZipSplitter())
                 .streaming()
+                .filter(simple("${header.zipFileName} endsWith '.asc'"))
                 .log("Unzipped ${file:name}")
-                .end()
-                .to("direct:terrain50data");
-
-        from("direct:terrain50data")
-                .routeId("terrain50 data")
-                .log("Processing data from ${file:path}")
+                //.to("log:ascfiles")
                 .process(terrain50DataProcessor)
                 .to("jpa:Terrain50Grid");
     }
