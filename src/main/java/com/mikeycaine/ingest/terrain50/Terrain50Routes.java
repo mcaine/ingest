@@ -17,7 +17,7 @@ public class Terrain50Routes extends RouteBuilder {
     public void configure() throws Exception {
         from("file:" + TERR50_DATA + "?noop=true&recursive=true")
                 .routeId("terrain50 unzip")
-                .autoStartup(true)
+                .autoStartup(false)
                 .idempotentConsumer(header("CamelFileName"),
                         MemoryIdempotentRepository.memoryIdempotentRepository(10000))
                 //.log("Unzipping ${file:path}")
