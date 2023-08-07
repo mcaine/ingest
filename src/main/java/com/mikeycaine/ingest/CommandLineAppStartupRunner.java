@@ -1,6 +1,7 @@
 package com.mikeycaine.ingest;
 
 import com.mikeycaine.ingest.adminboundaries.AdministrativeUnitRepository;
+import com.mikeycaine.ingest.hillcsv.HillRepository;
 import com.mikeycaine.ingest.terrain50.Terrain50GridRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     private final Terrain50GridRepository terrain50GridRepository;
     private final AdministrativeUnitRepository administrativeUnitRepository;
 
+    private final HillRepository hillRepository;
+
     @Override
     public void run(String... args) throws Exception {
         log.info("Application started with command-line arguments: {}", Arrays.toString(args));
@@ -32,6 +35,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         }
 
         log.info("Found " + administrativeUnitRepository.count() + " Administrative Units");
+
+        log.info("Found " + hillRepository.count() + " Hills");
     }
 
     void logHighestPointInTile(String tileId) {

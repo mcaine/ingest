@@ -59,7 +59,8 @@ public class AdminUnitController {
 
 
         FeatureJSON fj = new FeatureJSON();
-        fj.setEncodeFeatureCRS(true);
+        //fj.setEncodeFeatureCRS(true);
+        fj.setEncodeFeatureCollectionCRS(true);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         fj.writeFeatureCollection(featureCollection, os);

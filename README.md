@@ -6,3 +6,10 @@ Ingest Ordnance Survey Open Data using Spring Boot/Apache Camel/Hibernate Spatia
 * Openmap Local - various features inc railways
 * Open Rivers
 * Database of British and Irish Hills CSV http://www.hills-database.co.uk/hillcsv.zip
+
+
+```
+docker pull postgis/postgis:15-3.3
+
+docker run -e POSTGRES_PASSWORD=bollox postgis/postgis:15-3.3
+```

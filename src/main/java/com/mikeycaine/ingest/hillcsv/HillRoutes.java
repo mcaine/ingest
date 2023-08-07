@@ -29,6 +29,7 @@ public class HillRoutes extends RouteBuilder {
             .autoStartup(false)
             .unmarshal().csv()
             .process(exchange -> {
+                log.info("Reading Hills...");
                     Message in = exchange.getIn();
                     List<LinkedHashMap<String, String>> records = in.getBody(ArrayList.class);
                     List<Hill> hills = records.stream().map(Hill::fromHashMap).collect(Collectors.toList());
