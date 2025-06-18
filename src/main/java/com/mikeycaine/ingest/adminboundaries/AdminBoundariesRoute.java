@@ -1,13 +1,14 @@
 package com.mikeycaine.ingest.adminboundaries;
 
 import com.mikeycaine.ingest.adminboundaries.AdministrativeUnitProcessor;
+import jakarta.xml.bind.JAXBContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.support.builder.Namespaces;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.JAXBContext;
+
 
 @Component
 @RequiredArgsConstructor

@@ -2,6 +2,8 @@ package com.mikeycaine.ingest.openmaplocal;
 
 import com.mikeycaine.ingest.openrivers.HydroNodeProcessor;
 import com.mikeycaine.ingest.openrivers.WatercourseLinkProcessor;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
@@ -9,9 +11,6 @@ import org.apache.camel.dataformat.zipfile.ZipSplitter;
 import org.apache.camel.support.builder.Namespaces;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.springframework.stereotype.Component;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 
 @Component
 @RequiredArgsConstructor
