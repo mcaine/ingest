@@ -26,7 +26,7 @@ public class AdminBoundariesRoute extends RouteBuilder {
 
         from("file:E:\\Downloads\\bdline_gml3_gb\\Data?fileName=INSPIRE_AdministrativeUnit.gml&noop=true")
                 .routeId("admin boundaries ingest")
-                .autoStartup(false)
+                .autoStartup(true)
                 .split(xpath("//au:AdministrativeUnit", namespaces))
                 .streaming()
                 .unmarshal(jaxbDataFormat)

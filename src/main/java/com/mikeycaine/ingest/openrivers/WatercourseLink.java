@@ -3,17 +3,17 @@ package com.mikeycaine.ingest.openrivers;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Proxy;
+//import org.hibernate.annotations.Proxy;
 import org.locationtech.jts.geom.LineString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="watercourse_link")
-@Proxy(lazy = false)
+//@Proxy(lazy = false)
 @NoArgsConstructor
 public class WatercourseLink {
     @Id

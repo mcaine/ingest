@@ -3,6 +3,7 @@ package com.mikeycaine.ingest.adminboundaries;
 import com.mikeycaine.ingest.Util;
 import eu.europa.ec.inspire.schemas.au._4.AdministrativeUnitType;
 import eu.europa.ec.inspire.schemas.gn._4.GeographicalNamePropertyType;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.opengis.gml._3.*;
@@ -13,7 +14,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 import java.util.stream.Collectors;

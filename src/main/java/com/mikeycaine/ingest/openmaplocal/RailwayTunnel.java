@@ -3,17 +3,17 @@ package com.mikeycaine.ingest.openmaplocal;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Proxy;
+//import org.hibernate.annotations.Proxy;
 import org.locationtech.jts.geom.LineString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="railway_tunnel")
-@Proxy(lazy = false)
+//@Proxy(lazy = false)
 @NoArgsConstructor
 public class RailwayTunnel {
 

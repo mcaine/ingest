@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-@Component
+//@Component
 @Slf4j
 @RequiredArgsConstructor
-public class CommandLineAppStartupRunner implements CommandLineRunner {
+public class CommandLineAppStartupRunner /*implements CommandLineRunner*/ {
 
     private final Terrain50GridRepository terrain50GridRepository;
     private final AdministrativeUnitRepository administrativeUnitRepository;
 
     private final HillRepository hillRepository;
 
-    @Override
+    //@Override
     public void run(String... args) throws Exception {
         log.info("Application started with command-line arguments: {}", Arrays.toString(args));
 

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.7</version>
+		<version>3.5.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -17,9 +17,10 @@
 	<description>Ingest OS Opendata</description>
 
 	<properties>
-		<java.version>15</java.version>
+		<java.version>21</java.version>
         <geotools.version>27-SNAPSHOT</geotools.version>
         <camel.version>3.16.0</camel.version>
+        <hibernate.version>6.0.0.Final</hibernate.version>
 	</properties>
 
     <repositories>
@@ -134,6 +135,12 @@
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>4.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>
