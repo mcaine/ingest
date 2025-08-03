@@ -19,7 +19,8 @@ public class Util {
       return new GeometryFactory(new PrecisionModel(), 27700);
     }
     public static LinearRing convertLinearRingType(LinearRingType lrt) {
-        CoordinatesType coordinatesType = lrt.getCoordinates();
+        net.opengis.gml._3.CoordinatesType coordinatesType = lrt.getCoordinates();
+        DirectPositionListType dplt = lrt.getPosList();
         List<Double> positions = lrt.getPosList().getValue();
         int nCoords = positions.size() / 2;
 

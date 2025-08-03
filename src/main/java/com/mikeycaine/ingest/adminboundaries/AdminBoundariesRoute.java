@@ -8,6 +8,7 @@ import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.support.builder.Namespaces;
 import org.springframework.stereotype.Component;
 
+import eu.europa.ec.inspire.schemas.au._4.AdministrativeUnitType;
 
 
 @Component
@@ -18,8 +19,14 @@ public class AdminBoundariesRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+
+//        JAXBContext jaxbContext = JAXBContext.newInstance(AdministrativeUnitType.class);
+//        //JAXBContext jaxbContext = JAXBContext.newInstance("eu.europa.ec.inspire.schemas.au._4");
+//        JaxbDataFormat jaxbDataFormat = new JaxbDataFormat(jaxbContext);
+//        jaxbDataFormat.setPartClass(AdministrativeUnitType.class);
+
         JaxbDataFormat jaxbDataFormat = new JaxbDataFormat();
-        JAXBContext jaxbContext = JAXBContext.newInstance(eu.europa.ec.inspire.schemas.au._4.AdministrativeUnitType.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(AdministrativeUnitType.class);
         jaxbDataFormat.setContext(jaxbContext);
 
         Namespaces namespaces = new Namespaces()
@@ -27,7 +34,7 @@ public class AdminBoundariesRoute extends RouteBuilder {
 
         from("file:E:\\Downloads\\bdline_gml3_gb\\Data?fileName=INSPIRE_AdministrativeUnit.gml&noop=true")
                 .routeId("admin boundaries ingest")
-                .autoStartup(true)
+                .autoStartup(false)
                 .split(xpath("//au:AdministrativeUnit", namespaces))
                 .streaming()
                 .unmarshal(jaxbDataFormat)
