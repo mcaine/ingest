@@ -1,12 +1,13 @@
 package com.mikeycaine.ingest.openmaplocal;
 
 import com.mikeycaine.ingest.Util;
-import net.opengis.gml._3.DirectPositionType;
+import net.opengis.gml._3.*;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
+
 import uk.os.namespaces.open.oml._1.RailwayStationType;
 
 import java.util.List;
@@ -19,12 +20,12 @@ public class RailwayStationProcessor implements Processor {
         Message in = exchange.getIn();
         RailwayStationType rst = in.getBody(RailwayStationType.class);
 
-        String id = rst.getId();
+        String id = rst.getFeatureCode().toString();
         String name = rst.getDistinctiveName();
 
         Optional<DirectPositionType> dpOption = Optional.ofNullable(rst.getGeometry())
             .flatMap(geom -> Optional.ofNullable(geom.getPoint()))
-            .flatMap(pt -> Optional.ofNullable(pt.getPos()));
+            .flatMap(pt -> Optional.ofNullable(((PointType)pt).getPos()));
 
         Point location = Util.pointFromDirectPositionOption(dpOption);
 

@@ -1,13 +1,15 @@
 package com.mikeycaine.ingest.adminboundaries;
 
 import com.mikeycaine.ingest.adminboundaries.AdministrativeUnitProcessor;
+import jakarta.xml.bind.JAXBContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.support.builder.Namespaces;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.JAXBContext;
+import eu.europa.ec.inspire.schemas.au._4.AdministrativeUnitType;
+
 
 @Component
 @RequiredArgsConstructor
@@ -17,8 +19,14 @@ public class AdminBoundariesRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+
+//        JAXBContext jaxbContext = JAXBContext.newInstance(AdministrativeUnitType.class);
+//        //JAXBContext jaxbContext = JAXBContext.newInstance("eu.europa.ec.inspire.schemas.au._4");
+//        JaxbDataFormat jaxbDataFormat = new JaxbDataFormat(jaxbContext);
+//        jaxbDataFormat.setPartClass(AdministrativeUnitType.class);
+
         JaxbDataFormat jaxbDataFormat = new JaxbDataFormat();
-        JAXBContext jaxbContext = JAXBContext.newInstance(eu.europa.ec.inspire.schemas.au._4.AdministrativeUnitType.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(AdministrativeUnitType.class);
         jaxbDataFormat.setContext(jaxbContext);
 
         Namespaces namespaces = new Namespaces()

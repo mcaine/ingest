@@ -1,19 +1,19 @@
 package com.mikeycaine.ingest.adminboundaries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Proxy;
 import org.locationtech.jts.geom.MultiPolygon;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="administrative_unit")
-@Proxy(lazy = false)
+//@Proxy(lazy = false)
 public class AdministrativeUnit {
     @Id
     @Column(name = "id", nullable = false)
@@ -21,7 +21,7 @@ public class AdministrativeUnit {
     @Setter
     private String id;
 
-    @Column(name = "boundary", nullable = false, columnDefinition="Geometry")
+    @Column(name = "boundary", nullable = false, columnDefinition="geometry(MultiPolygon, 27700)")
     @Getter
     @Setter
     @JsonIgnore

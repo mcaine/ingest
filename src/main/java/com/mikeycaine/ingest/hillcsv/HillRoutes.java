@@ -26,7 +26,7 @@ public class HillRoutes extends RouteBuilder {
         // http://www.hills-database.co.uk/hillcsv.zip
 
         from("file:E:\\Downloads\\hillcsv\\?fileName=DoBIH_v17_4.csv&noop=true")
-            .autoStartup(false)
+            .autoStartup(true)
             .unmarshal().csv()
             .process(exchange -> {
                 log.info("Reading Hills...");
