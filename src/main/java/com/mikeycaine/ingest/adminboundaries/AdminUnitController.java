@@ -2,7 +2,6 @@ package com.mikeycaine.ingest.adminboundaries;
 
 import lombok.RequiredArgsConstructor;
 import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.geojson.feature.FeatureJSON;
