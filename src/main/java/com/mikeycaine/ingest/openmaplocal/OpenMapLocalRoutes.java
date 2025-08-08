@@ -22,9 +22,9 @@ public class OpenMapLocalRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("file:" + OPENMAPLOCAL_DATA + "?noop=true&recursive=true")
-            .routeId("openmaplocal")
-            .autoStartup(true)
-            .log("OpenMapLocal ${file:path}")
+            .routeId("Open Map Local")
+            .autoStartup(false)
+            .log("Open Map Local ${file:path}")
             .unmarshal(jaxbDataFormat())
             .process(openMapLocalFeatureCollectionProcessor)
             .split(body())

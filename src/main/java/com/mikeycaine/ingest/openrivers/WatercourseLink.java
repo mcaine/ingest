@@ -1,0 +1,44 @@
+package com.mikeycaine.ingest.openrivers;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import org.hibernate.annotations.Proxy;
+import org.locationtech.jts.geom.LineString;
+
+
+
+@Entity
+@Table(name="watercourse_link")
+//@Proxy(lazy = false)
+@NoArgsConstructor
+public class WatercourseLink {
+    @Id
+    @Getter
+    @Setter
+    private String id;
+
+    @Getter
+    @Setter
+    private String name;
+    @Getter
+    @Setter
+    private String form;
+    @Getter
+    @Setter
+    @Column(name = "centreLine", nullable = false, columnDefinition="Geometry")
+    private LineString lineString;
+
+    public WatercourseLink(String id, String name, String form, LineString lineString) {
+        this.id = id;
+        this.name = name;
+        this.form = form;
+        this.lineString = lineString;
+    }
+}
