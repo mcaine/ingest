@@ -24,8 +24,8 @@ public class RailwayTunnelProcessor implements Processor {
         LineString lineString = Optional.ofNullable(rtt.getGeometry())
             .flatMap(geom -> Optional.ofNullable(geom.getAbstractCurve()))
             .filter(el -> el.getDeclaredType().equals(LineStringType.class))
-            .map(e -> ((JAXBElement<LineStringType>)e).getValue())
-            .flatMap(ls -> Optional.ofNullable(Util.convertLineString(ls)))
+            .map(e -> e.getValue())
+            .flatMap(ls -> Optional.ofNullable(Util.convertLineString((LineStringType)ls)))
             .orElse(null);
 
         RailwayTunnel railwayTunnel =  new RailwayTunnel(id, lineString);

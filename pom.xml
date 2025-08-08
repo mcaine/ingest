@@ -203,6 +203,12 @@
 			<scope>test</scope>
 		</dependency>
 
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>
@@ -224,7 +230,8 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-xjc-plugin</artifactId>
-                <version>3.3.2</version>
+                <!--<version>3.3.2</version>-->
+                <version>4.0.0</version>
                 <executions>
                     <execution>
                         <id>xjc</id>
@@ -237,7 +244,7 @@
 
                                 <xsdOption>
                                     <xsd>${basedir}/src/main/xsd/AdministrativeUnits.xsd</xsd>
-                                    <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
+                                   <bindingFile>${basedir}/src/main/xjb/bindings.xjb</bindingFile>
                                     <extension>true</extension>
                                 </xsdOption>
 

@@ -72,7 +72,8 @@ public class AdminUnitService {
                 .filter(spt -> spt.getAbstractSurface().getDeclaredType().equals(SurfaceType.class))
                 .flatMap(spt -> {
                     SurfaceType surface = (SurfaceType) spt.getAbstractSurface().getValue();
-                    return surface.getPatches().getValue().getAbstractSurfacePatch().stream().map(JAXBElement::getValue)
+                    return surface.getPatches().getValue().getAbstractSurfacePatch().stream()
+                         .map(el -> el.getValue())
                         .filter(patch -> patch.getClass().equals(PolygonPatchType.class))
                         .map(patch -> {
                             PolygonPatchType polygonPatchType = (PolygonPatchType) patch;
