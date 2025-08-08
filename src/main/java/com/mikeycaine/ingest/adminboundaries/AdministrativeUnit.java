@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
-pimport org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.Proxy;
 import org.locationtech.jts.geom.MultiPolygon;
 
 import jakarta.persistence.Column;
