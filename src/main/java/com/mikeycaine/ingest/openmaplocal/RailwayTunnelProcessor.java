@@ -20,7 +20,7 @@ public class RailwayTunnelProcessor implements Processor {
         Message in = exchange.getIn();
         RailwayTunnelType rtt = in.getBody(RailwayTunnelType.class);
 
-        String id = rtt.getFeatureCode().toString();
+        String id = rtt.getId();
         LineString lineString = Optional.ofNullable(rtt.getGeometry())
             .flatMap(geom -> Optional.ofNullable(geom.getAbstractCurve()))
             .filter(el -> el.getDeclaredType().equals(LineStringType.class))

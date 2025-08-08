@@ -12,8 +12,6 @@ import java.util.Optional;
 
 import uk.os.namespaces.open.oml._1.RailwayTrackType;
 
-import javax.xml.bind.JAXBElement;
-
 @Service
 public class RailwayTrackProcessor implements Processor {
     @Override
@@ -21,13 +19,12 @@ public class RailwayTrackProcessor implements Processor {
         Message in = exchange.getIn();
         RailwayTrackType rtt = in.getBody(RailwayTrackType.class);
 
-        String id = rtt.getFeatureCode().toString();
+        String id = rtt.getId();
         LineString lineString = Optional.ofNullable(rtt.getGeometry())
             .flatMap(geom -> Optional.ofNullable(geom.getAbstractCurve()))
             .filter(el -> el.getDeclaredType().equals(LineStringType.class))
             .map(e -> e.getValue())
-            .flatMap(ls ->
-                Optional.ofNullable(Util.convertLineString((LineStringType)ls)))
+            .flatMap(ls -> Optional.ofNullable(Util.convertLineString((LineStringType)ls)))
             .orElse(null);
 
         RailwayTrack railwayTrack =  new RailwayTrack(id, lineString);

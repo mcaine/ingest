@@ -9,10 +9,6 @@ import org.springframework.stereotype.Service;
 
 import uk.os.namespaces.product._1.FeatureCollectionType;
 
-//import uk.os.namespaces.product._1.*;
-//import net.opengis.gml._3.*;
-
-import javax.xml.bind.JAXBElement;
 import java.util.List;
 import java.util.stream.Collectors;
 

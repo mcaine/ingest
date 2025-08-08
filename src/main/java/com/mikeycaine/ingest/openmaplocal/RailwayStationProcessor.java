@@ -20,7 +20,7 @@ public class RailwayStationProcessor implements Processor {
         Message in = exchange.getIn();
         RailwayStationType rst = in.getBody(RailwayStationType.class);
 
-        String id = rst.getFeatureCode().toString();
+        String id = rst.getId();
         String name = rst.getDistinctiveName();
 
         Optional<DirectPositionType> dpOption = Optional.ofNullable(rst.getGeometry())
