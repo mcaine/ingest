@@ -34,9 +34,9 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             ).forEach(tileId -> logHighestPointInTile(tileId));
         }
 
-        log.info("Found " + administrativeUnitRepository.count() + " Administrative Units");
+        log.info("Found " + administrativeUnitRepository.count() + " Administrative Units (11743?)");
 
-        log.info("Found " + hillRepository.count() + " Hills");
+        log.info("Found " + hillRepository.count() + " Hills (21291?)");
     }
 
     void logHighestPointInTile(String tileId) {

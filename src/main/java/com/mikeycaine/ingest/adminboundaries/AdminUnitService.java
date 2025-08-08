@@ -40,7 +40,7 @@ public class AdminUnitService {
     private AdministrativeUnit convertToOurType(AdministrativeUnitType administrativeUnitType) {
         GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), SRID);
 
-        String id = administrativeUnitType.getInspireId().toString();
+        String id = administrativeUnitType.getId();
         net.opengis.gml._3.MultiSurfacePropertyType geometry = administrativeUnitType.getGeometry();
         List<ReferenceType> admins = administrativeUnitType.getAdministeredBy();
         List<GeographicalNamePropertyType> geoNames = administrativeUnitType.getName();

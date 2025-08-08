@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
+pimport org.hibernate.annotations.Proxy;
 import org.locationtech.jts.geom.MultiPolygon;
 
 import jakarta.persistence.Column;
@@ -13,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="administrative_unit")
-//@Proxy(lazy = false)
+@Proxy(lazy = false)
 public class AdministrativeUnit {
     @Id
     @Column(name = "id", nullable = false)
