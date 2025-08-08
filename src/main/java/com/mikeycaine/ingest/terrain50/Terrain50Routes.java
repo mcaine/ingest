@@ -13,20 +13,20 @@ public class Terrain50Routes extends RouteBuilder {
     private final Terrain50DataProcessor terrain50DataProcessor;
 
     final static String TERR50_DATA = "E:\\Downloads\\terr50_gagg_gb\\terr50_gagg_gb\\data";
+
     @Override
     public void configure() throws Exception {
         from("file:" + TERR50_DATA + "?noop=true&recursive=true")
-                .routeId("terrain50 unzip")
-                .autoStartup(false)
-                .idempotentConsumer(header("CamelFileName"),
-                        MemoryIdempotentRepository.memoryIdempotentRepository(10000))
-                //.log("Unzipping ${file:path}")
-                .split(new ZipSplitter())
-                .streaming()
-                .filter(simple("${header.zipFileName} endsWith '.asc'"))
-                .log("Unzipped ${file:name}")
-                //.to("log:ascfiles")
-                .process(terrain50DataProcessor)
-                .to("jpa:Terrain50Grid");
+            .routeId("terrain50 unzip")
+            .autoStartup(false)
+            .idempotentConsumer(
+                header("CamelFileName"),
+                MemoryIdempotentRepository.memoryIdempotentRepository(10000))
+            .split(new ZipSplitter())
+            .streaming()
+            .filter(simple("${header.zipFileName} endsWith '.asc'"))
+            .log("Unzipped ${file:name}")
+            .process(terrain50DataProcessor)
+            .to("jpa:Terrain50Grid");
     }
 }
