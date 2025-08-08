@@ -20,12 +20,12 @@ public class AdminBoundariesRoute extends RouteBuilder {
         jaxbDataFormat.setContext(JAXBContext.newInstance("eu.europa.ec.inspire.schemas.au._4"));
 
         Namespaces namespaces = new Namespaces()
-                .add("au", "http://inspire.ec.europa.eu/schemas/au/4.0");
+            .add("au", "http://inspire.ec.europa.eu/schemas/au/4.0");
 
         from("file:E:\\Downloads\\bdline_gml3_gb\\Data?fileName=INSPIRE_AdministrativeUnit.gml&noop=true")
-             .routeId("AdministrativeUnit")
-             .autoStartup(true)
-             .split(xpath("//au:AdministrativeUnit", namespaces))
+            .routeId("AdministrativeUnit")
+            .autoStartup(false)
+            .split(xpath("//au:AdministrativeUnit", namespaces))
             .streaming()
             .unmarshal(jaxbDataFormat)
             .process(administrativeUnitProcessor)
