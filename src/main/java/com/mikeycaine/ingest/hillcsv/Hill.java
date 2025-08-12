@@ -9,12 +9,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Map;
-import java.util.Optional;
+
+import static com.mikeycaine.ingest.RecordUtils.*;
 
 @Entity
 @Table(name="hill")
 @ToString
-//@NoArgsConstructor
+@NoArgsConstructor
 public class Hill {
 
     // Number
@@ -194,8 +195,5 @@ public class Hill {
         return hill;
     }
 
-    private static Float fieldAsFloat(Map<String, String> record, String fieldName) {
-        return Optional.of(record.get(fieldName)).map(Float::valueOf).orElse(null);
 
-    }
 }
