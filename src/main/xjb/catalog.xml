@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+
+  <!-- OGC schemas (GML, ISO 19139, etc.) -->
+  <rewriteSystem systemIdStartString="http://schemas.opengis.net/" rewritePrefix="../xsd/remote-cache/"/>
+  <rewriteSystem systemIdStartString="https://schemas.opengis.net/" rewritePrefix="../xsd/remote-cache/"/>
+  <rewriteURI uriStartString="http://schemas.opengis.net/" rewritePrefix="../xsd/remote-cache/"/>
+  <rewriteURI uriStartString="https://schemas.opengis.net/" rewritePrefix="../xsd/remote-cache/"/>
+
+  <!-- INSPIRE schemas -->
+  <rewriteSystem systemIdStartString="https://inspire.ec.europa.eu/" rewritePrefix="../xsd/remote-cache/"/>
+  <rewriteSystem systemIdStartString="http://inspire.ec.europa.eu/" rewritePrefix="../xsd/remote-cache/"/>
+  <rewriteURI uriStartString="https://inspire.ec.europa.eu/" rewritePrefix="../xsd/remote-cache/"/>
+  <rewriteURI uriStartString="http://inspire.ec.europa.eu/" rewritePrefix="../xsd/remote-cache/"/>
+
+  <!-- W3C XLink / XML -->
+  <system systemId="http://www.w3.org/1999/xlink.xsd" uri="../xsd/remote-cache/www.w3.org/1999/xlink.xsd"/>
+  <system systemId="https://www.w3.org/1999/xlink.xsd" uri="../xsd/remote-cache/www.w3.org/1999/xlink.xsd"/>
+  <uri name="http://www.w3.org/1999/xlink.xsd" uri="../xsd/remote-cache/www.w3.org/1999/xlink.xsd"/>
+  <uri name="https://www.w3.org/1999/xlink.xsd" uri="../xsd/remote-cache/www.w3.org/1999/xlink.xsd"/>
+
+  <system systemId="http://www.w3.org/2001/xml.xsd" uri="../xsd/remote-cache/www.w3.org/2001/xml.xsd"/>
+  <system systemId="https://www.w3.org/2001/xml.xsd" uri="../xsd/remote-cache/www.w3.org/2001/xml.xsd"/>
+  <system systemId="http://www.w3.org/2009/01/xml.xsd" uri="../xsd/remote-cache/www.w3.org/2009/01/xml.xsd"/>
+  <system systemId="https://www.w3.org/2009/01/xml.xsd" uri="../xsd/remote-cache/www.w3.org/2009/01/xml.xsd"/>
+
+  <!-- Ordnance Survey product schema -->
+  <rewriteSystem systemIdStartString="https://www.ordnancesurvey.co.uk/" rewritePrefix="../xsd/remote-cache/www.ordnancesurvey.co.uk/"/>
+  <rewriteSystem systemIdStartString="http://www.ordnancesurvey.co.uk/" rewritePrefix="../xsd/remote-cache/www.ordnancesurvey.co.uk/"/>
+  <rewriteURI uriStartString="https://www.ordnancesurvey.co.uk/" rewritePrefix="../xsd/remote-cache/www.ordnancesurvey.co.uk/"/>
+  <rewriteURI uriStartString="http://www.ordnancesurvey.co.uk/" rewritePrefix="../xsd/remote-cache/www.ordnancesurvey.co.uk/"/>
+
+  <!-- ISO 19139 srv 1.0 references newer schemas.isotc211.org paths; map to local 20070417 copies -->
+  <system systemId="https://schemas.isotc211.org/19139/-/gco/1.0/gco.xsd" uri="../xsd/remote-cache/iso/19139/20070417/gco/gco.xsd"/>
+  <system systemId="https://schemas.isotc211.org/19139/-/gmd/1.0/gmd.xsd" uri="../xsd/remote-cache/iso/19139/20070417/gmd/gmd.xsd"/>
+
+</catalog>

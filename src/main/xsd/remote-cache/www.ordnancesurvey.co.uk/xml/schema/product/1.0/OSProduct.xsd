@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:os="http://namespaces.os.uk/product/1.0" elementFormDefault="qualified" targetNamespace="http://namespaces.os.uk/product/1.0" version="0.2">
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element name="FeatureCollection" substitutionGroup="gml:AbstractFeature" type="os:FeatureCollectionType"/>
+  <complexType name="FeatureCollectionType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="metadata">
+            <complexType>
+              <complexContent>
+                <extension base="gml:AbstractMetadataPropertyType">
+                  <sequence/>
+                  <attributeGroup ref="gml:AssociationAttributeGroup"/>
+                </extension>
+              </complexContent>
+            </complexType>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="featureMember" type="gml:FeaturePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FeatureCollectionPropertyType">
+    <sequence minOccurs="0">
+      <element ref="os:FeatureCollection"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="Transaction" substitutionGroup="gml:AbstractFeature" type="os:TransactionType"/>
+  <complexType name="TransactionType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="insert" type="gml:FeaturePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="replace" type="gml:FeaturePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="delete" type="gml:FeaturePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="TransactionPropertyType">
+    <sequence minOccurs="0">
+      <element ref="os:Transaction"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+</schema>
