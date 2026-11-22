@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
@@ -14,8 +14,8 @@ import org.testcontainers.utility.DockerImageName;
 class IngestApplicationTests {
 
     @Container
-    static final PostgreSQLContainer<?> POSTGIS =
-            new PostgreSQLContainer<>(DockerImageName.parse("postgis/postgis:16-3.4")
+    static final PostgreSQLContainer POSTGIS =
+            new PostgreSQLContainer(DockerImageName.parse("postgis/postgis:16-3.4")
                     .asCompatibleSubstituteFor("postgres"))
                     .withDatabaseName("palantirjunior")
                     .withUsername("postgres")
