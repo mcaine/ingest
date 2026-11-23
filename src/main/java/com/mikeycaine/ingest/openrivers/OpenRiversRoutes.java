@@ -1,11 +1,14 @@
 package com.mikeycaine.ingest.openrivers;
 
 import lombok.RequiredArgsConstructor;
+import net.opengis.gml._3.FeaturePropertyType;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
+import org.apache.camel.support.builder.Namespaces;
 import org.springframework.stereotype.Component;
 
 import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 
 @Component
@@ -14,9 +17,11 @@ public class OpenRiversRoutes extends RouteBuilder {
 
     private final WatercourseLinkProcessor watercourseLinkProcessor;
     private final HydroNodeProcessor hydroNodeProcessor;
-    private final OpenRiversFeatureCollectionProcessor openRiversFeatureCollectionProcessor;
 
     final static String OPENRIVERS_DATA = "E:\\Downloads\\oprvrs_gml3_gb\\data?fileName=OSOpenRivers.gml";
+
+    private static final Namespaces NAMESPACES =
+        new Namespaces("os", "http://namespaces.os.uk/product/1.0");
 
     @Override
     public void configure() throws Exception {
@@ -24,10 +29,19 @@ public class OpenRiversRoutes extends RouteBuilder {
             .routeId("OpenRivers")
             .autoStartup(false)
             .log("OpenRivers ${file:path}")
-            .unmarshal(jaxbDataFormat())
-            .process(openRiversFeatureCollectionProcessor)
-            .split(body())
+            .split().xtokenize("//os:featureMember", 'i', NAMESPACES)
             .streaming()
+            .unmarshal(jaxbDataFormat())
+            .process(exchange -> {
+                Object body = exchange.getIn().getBody();
+                if (body instanceof JAXBElement<?> element) {
+                    body = element.getValue();
+                }
+                if (body instanceof FeaturePropertyType featureMember) {
+                    body = featureMember.getAbstractFeature().getValue();
+                }
+                exchange.getIn().setBody(body);
+            })
             .choice()
 
                 .when(simple("${body} is 'uk.os.namespaces.open.rivers._1.HydroNodeType'"))
@@ -52,6 +66,7 @@ public class OpenRiversRoutes extends RouteBuilder {
             net.opengis.gml._3.ObjectFactory.class
         );
         jaxbDataFormat.setContext(jaxbContext);
+        jaxbDataFormat.setPartClass(FeaturePropertyType.class);
         return jaxbDataFormat;
     }
 }

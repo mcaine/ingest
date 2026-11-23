@@ -26,7 +26,7 @@ public class AdminUnitController {
 
     @GetMapping("/adminarea/{id}")
     public AdministrativeUnit adminarea (@PathVariable String id){
-        return repo.getById(id);
+        return repo.findById(id).orElse(null);
     }
 
     @GetMapping("/boundary/{id}")
@@ -44,7 +44,7 @@ public class AdminUnitController {
 
         final SimpleFeatureType featureType = multipolygonTypeBuilder.buildFeatureType();
 
-        AdministrativeUnit administrativeUnit = repo.getById(id);
+        AdministrativeUnit administrativeUnit = repo.findById(id).orElse(null);
 
         DefaultFeatureCollection featureCollection = new DefaultFeatureCollection(null,null);
 
