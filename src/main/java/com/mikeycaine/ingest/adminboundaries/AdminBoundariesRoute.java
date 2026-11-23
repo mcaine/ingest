@@ -4,6 +4,7 @@ import jakarta.xml.bind.JAXBContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
+import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
 import org.apache.camel.support.builder.Namespaces;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AdminBoundariesRoute extends RouteBuilder {
 
-    private final AdministrativeUnitProcessor administrativeUnitProcessor;
+    private final AdminUnitService adminUnitService;
 
     @Override
     public void configure() throws Exception {
@@ -28,7 +29,10 @@ public class AdminBoundariesRoute extends RouteBuilder {
             .split().xtokenize("//au:AdministrativeUnit", 'i', namespaces)
             .streaming()
             .unmarshal(jaxbDataFormat)
-            .process(administrativeUnitProcessor)
+            .aggregate(header("CamelFileName"), new GroupedBodyAggregationStrategy())
+                .completionSize(500)
+                .completionTimeout(5000)
+                .bean(adminUnitService, "saveAdministrativeUnits")
             .end();
     }
 }

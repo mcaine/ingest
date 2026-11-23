@@ -31,10 +31,16 @@ public class AdminUnitService {
 
     final private AdministrativeUnitRepository repo;
 
-    void persistAdminstrativeUnit(AdministrativeUnitType administrativeUnitType) {
+    public void persistAdminstrativeUnit(AdministrativeUnitType administrativeUnitType) {
         AdministrativeUnit administrativeUnit = convertToOurType(administrativeUnitType);
 
         repo.save(administrativeUnit);
+    }
+
+    public void saveAdministrativeUnits(List<AdministrativeUnitType> administrativeUnits) {
+        repo.saveAll(administrativeUnits.stream()
+                .map(this::convertToOurType)
+                .collect(Collectors.toList()));
     }
 
     private AdministrativeUnit convertToOurType(AdministrativeUnitType administrativeUnitType) {
