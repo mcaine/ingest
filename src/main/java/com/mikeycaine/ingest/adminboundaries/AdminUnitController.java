@@ -11,6 +11,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +26,12 @@ public class AdminUnitController {
     private final AdministrativeUnitRepository repo;
 
     @GetMapping("/adminarea/{id}")
-    public AdministrativeUnit adminarea (@PathVariable String id){
-        return repo.findById(id).orElse(null);
+    public ResponseEntity<AdministrativeUnit> adminarea (@PathVariable String id){
+        return ResponseEntity.ofNullable(repo.findById(id).orElse(null));
     }
 
     @GetMapping("/boundary/{id}")
-    public String boundary(@PathVariable String id) throws FactoryException, IOException {
+    public ResponseEntity<String> boundary(@PathVariable String id) throws FactoryException, IOException {
 
         String crs = "EPSG:27700";
         CoordinateReferenceSystem osgbCrs = CRS.decode(crs);
@@ -45,6 +46,9 @@ public class AdminUnitController {
         final SimpleFeatureType featureType = multipolygonTypeBuilder.buildFeatureType();
 
         AdministrativeUnit administrativeUnit = repo.findById(id).orElse(null);
+        if (administrativeUnit == null) {
+            return ResponseEntity.notFound().build();
+        }
 
         DefaultFeatureCollection featureCollection = new DefaultFeatureCollection(null,null);
 
@@ -56,7 +60,6 @@ public class AdminUnitController {
         SimpleFeature feature = featureBuilder.buildFeature(null);
         featureCollection.add(feature);
 
-
         FeatureJSON fj = new FeatureJSON();
         //fj.setEncodeFeatureCRS(true);
         fj.setEncodeFeatureCollectionCRS(true);
@@ -65,6 +68,6 @@ public class AdminUnitController {
         fj.writeFeatureCollection(featureCollection, os);
         os.close();
 
-        return os.toString();
+        return ResponseEntity.ofNullable(os.toString());
     }
 }
