@@ -1,5 +1,7 @@
 package com.mikeycaine.ingest.openrivers;
 
+import com.mikeycaine.ingest.config.FileEndpointUris;
+import com.mikeycaine.ingest.config.IngestInputProperties;
 import lombok.RequiredArgsConstructor;
 import net.opengis.gml._3.FeaturePropertyType;
 import org.apache.camel.builder.RouteBuilder;
@@ -11,21 +13,23 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 
+import java.util.Map;
+
 @Component
 @RequiredArgsConstructor
 public class OpenRiversRoutes extends RouteBuilder {
 
     private final WatercourseLinkProcessor watercourseLinkProcessor;
     private final HydroNodeProcessor hydroNodeProcessor;
-
-    final static String OPENRIVERS_DATA = "E:\\Downloads\\oprvrs_gml3_gb\\data?fileName=OSOpenRivers.gml";
+    private final IngestInputProperties input;
 
     private static final Namespaces NAMESPACES =
         new Namespaces("os", "http://namespaces.os.uk/product/1.0");
 
     @Override
     public void configure() throws Exception {
-        from("file:" + OPENRIVERS_DATA + "&noop=true")
+        IngestInputProperties.OpenRivers rivers = input.openRivers();
+        from(FileEndpointUris.withFileName(rivers.directory(), rivers.fileName(), Map.of("noop", true)))
             .routeId("OpenRivers")
             .autoStartup(false)
             .log("OpenRivers ${file:path}")

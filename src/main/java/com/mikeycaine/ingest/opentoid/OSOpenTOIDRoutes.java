@@ -1,5 +1,8 @@
 package com.mikeycaine.ingest.opentoid;
 
+import com.mikeycaine.ingest.config.FileEndpointUris;
+import com.mikeycaine.ingest.config.IngestInputProperties;
+import lombok.RequiredArgsConstructor;
 import org.apache.camel.Message;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.csv.CsvDataFormat;
@@ -9,7 +12,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class OSOpenTOIDRoutes extends RouteBuilder  {
+
+    private final IngestInputProperties input;
+
     CsvDataFormat csv = new CsvDataFormat()
         .setLazyLoad(true)
         .setUseMaps(true);
@@ -17,8 +24,10 @@ public class OSOpenTOIDRoutes extends RouteBuilder  {
 
     @Override
     public void configure() throws Exception {
-        from("file:E:\\Downloads\\osopentoid_202508_csv_tq\\?fileName=osopentoid_202508_tq.csv&maxMessagesPerPoll=10000&noop=true")
- //       from("file:E:\\Downloads\\osopentoid_202508_csv_tq\\?fileName=short.csv&noop=true")
+        IngestInputProperties.OpenToid openToid = input.openToid();
+        from(FileEndpointUris.withFileName(openToid.directory(), openToid.fileName(),
+                Map.of("maxMessagesPerPoll", 10000, "noop", true)))
+        // Use --ingest.input.open-toid.file-name=short.csv to override the input file.
             .routeId("OS Open TOID")
             .autoStartup(false)
             .unmarshal(csv)
