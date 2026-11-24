@@ -27,7 +27,7 @@ public class RailwayStationProcessor implements Processor {
             .flatMap(geom -> Optional.ofNullable(geom.getPoint()))
             .flatMap(pt -> Optional.ofNullable(((PointType)pt).getPos()));
 
-        Point location = Util.pointFromDirectPositionOption(dpOption);
+        Point location = Util.pointFromDirectPositionOption(dpOption, Util.OS_SRID);
 
         RailwayStation railwayStation = new RailwayStation(id, name, location);
         in.setBody(railwayStation, RailwayStation.class);

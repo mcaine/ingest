@@ -24,7 +24,7 @@ public class RailwayTrackProcessor implements Processor {
             .flatMap(geom -> Optional.ofNullable(geom.getAbstractCurve()))
             .filter(el -> el.getDeclaredType().equals(LineStringType.class))
             .map(e -> e.getValue())
-            .flatMap(ls -> Optional.ofNullable(Util.convertLineString((LineStringType)ls)))
+            .flatMap(ls -> Optional.ofNullable(Util.convertLineString((LineStringType)ls, Util.OS_SRID)))
             .orElse(null);
 
         RailwayTrack railwayTrack =  new RailwayTrack(id, lineString);

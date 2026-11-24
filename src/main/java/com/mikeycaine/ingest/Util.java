@@ -15,10 +15,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Util {
-    protected static GeometryFactory newGeometryFactory() {
-      return new GeometryFactory(new PrecisionModel(), 27700);
+    public static final int OS_SRID = 27700;
+    public static final int WGS84_SRID = 4326;
+
+    protected static GeometryFactory newGeometryFactory(int srid) {
+      return new GeometryFactory(new PrecisionModel(), srid);
     }
-    public static LinearRing convertLinearRingType(LinearRingType lrt) {
+
+    public static LinearRing convertLinearRingType(LinearRingType lrt, int srid) {
         net.opengis.gml._3.CoordinatesType coordinatesType = lrt.getCoordinates();
         DirectPositionListType dplt = lrt.getPosList();
         List<Double> positions = lrt.getPosList().getValue();
@@ -29,18 +33,18 @@ public class Util {
             coordinates[i] = new Coordinate(lrt.getPosList().getValue().get(2 * i), lrt.getPosList().getValue().get(2 * i + 1));
         }
 
-        return newGeometryFactory().createLinearRing(coordinates);
+        return newGeometryFactory(srid).createLinearRing(coordinates);
     }
 
-    public static Polygon createPolygon(LinearRingType exterior, List<LinearRingType> interiors) {
-        LinearRing exteriorLinearRing = Util.convertLinearRingType(exterior);
-        List<LinearRing> interiorPolygons = interiors.stream().map(Util::convertLinearRingType).collect(Collectors.toList());
+    public static Polygon createPolygon(LinearRingType exterior, List<LinearRingType> interiors, int srid) {
+        LinearRing exteriorLinearRing = Util.convertLinearRingType(exterior, srid);
+        List<LinearRing> interiorPolygons = interiors.stream().map(inter -> Util.convertLinearRingType(inter, srid)).collect(Collectors.toList());
         LinearRing[] interiorPolygonsArray = interiorPolygons.toArray(new LinearRing[interiorPolygons.size()]);
 
-        return newGeometryFactory().createPolygon(exteriorLinearRing, interiorPolygonsArray);
+        return newGeometryFactory(srid).createPolygon(exteriorLinearRing, interiorPolygonsArray);
     }
 
-    public static LineString convertLineString(LineStringType lst) {
+    public static LineString convertLineString(LineStringType lst, int srid) {
         DirectPositionListType dplt = lst.getPosList();
         if (dplt == null) {
             throw new RuntimeException("No pos list");
@@ -51,18 +55,18 @@ public class Util {
         for (int i = 0; i < nCoords; ++i) {
             coordinates[i] = new Coordinate(values.get(2 * i), values.get(2 * i + 1));
         }
-        return newGeometryFactory().createLineString(coordinates);
+        return newGeometryFactory(srid).createLineString(coordinates);
     }
 
-    public static Point pointFrom(Double x, Double y) {
-        return newGeometryFactory().createPoint(new Coordinate(x,y));
+    public static Point pointFrom(Double x, Double y, int srid) {
+        return newGeometryFactory(srid).createPoint(new Coordinate(x,y));
     }
 
-    public static Point pointFromDirectPositionOption(Optional<DirectPositionType> dpOption) {
+    public static Point pointFromDirectPositionOption(Optional<DirectPositionType> dpOption, int srid) {
         return dpOption.flatMap(dp -> Optional.ofNullable(dp.getValue())).map(dp -> {
             Double x = dp.get(0);
             Double y = dp.get(1);
-            return Util.pointFrom(x,y);
+            return Util.pointFrom(x,y, srid);
         }).orElse(null);
     }
 

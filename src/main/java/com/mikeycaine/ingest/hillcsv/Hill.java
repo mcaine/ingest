@@ -1,6 +1,7 @@
 package com.mikeycaine.ingest.hillcsv;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mikeycaine.ingest.Util;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import jakarta.persistence.Table;
 import org.locationtech.jts.geom.Point;
 
 import java.util.Map;
+import java.util.Optional;
 
 import static com.mikeycaine.ingest.RecordUtils.*;
 
@@ -109,14 +111,14 @@ public class Hill {
     private Float longitude;
 
     // OS (Ordnance Survey) Location
-    @Column(name = "osLocation", nullable = false, columnDefinition="Geometry")
+    @Column(name = "osLocation", /* nullable = false , */ columnDefinition="Geometry")
     @Getter
     @Setter
     @JsonIgnore
     private Point osLocation;
 
     // OS (Ordnance Survey) Location
-    @Column(name = "wgs84Location", nullable = false, columnDefinition="Geometry")
+    @Column(name = "wgs84Location", /*nullable = false, */ columnDefinition="Geometry")
     @Getter
     @Setter
     @JsonIgnore
@@ -211,6 +213,18 @@ public class Hill {
         hill.yCoord = fieldAsFloat(record, "Ycoord");
         hill.latitude = fieldAsFloat(record, "Latitude");
         hill.longitude = fieldAsFloat(record, "Longitude");
+
+
+
+        hill.osLocation =
+                Optional.of(hill.xCoord).map (x ->
+                Optional.of(hill.yCoord).map(y ->
+                        Util.pointFrom(x.doubleValue(),y.doubleValue(), Util.OS_SRID))).get().orElse(null);
+
+        hill.wgs84Location =
+                Optional.of(hill.latitude).map (lat ->
+                        Optional.of(hill.longitude).map(lng ->
+                                Util.pointFrom(lat.doubleValue(),lng.doubleValue(), Util.WGS84_SRID))).get().orElse(null);
 
         return hill;
     }

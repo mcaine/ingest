@@ -36,7 +36,7 @@ public class HydroNodeProcessor implements Processor {
         Point location = null;
         if (posnValues.isPresent()) {
             List<Double> xy = posnValues.get();
-            location = Util.pointFrom(xy.get(0), xy.get(1));
+            location = Util.pointFrom(xy.get(0), xy.get(1), Util.OS_SRID);
         }
 
         HydroNode hydroNode = new HydroNode(id, nodeCategory, location);

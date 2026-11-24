@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class AdminUnitService {
 
-    final private static int SRID = 27700;
+    final private static int SRID = Util.OS_SRID;
 
     final private AdministrativeUnitRepository repo;
 
@@ -91,7 +91,7 @@ public class AdminUnitService {
             LinearRingType exterior = (LinearRingType) p.getExterior().getAbstractRing().getValue();
             List<LinearRingType> interiors = p.getInterior().stream().filter(obg -> obg.getAbstractRing().getDeclaredType().equals(LinearRingType.class))
                     .map(el -> (LinearRingType) el.getAbstractRing().getValue()).collect(Collectors.toList());
-            return Util.createPolygon(exterior, interiors);
+            return Util.createPolygon(exterior, interiors, SRID);
         }).collect(Collectors.toList());
 
         return polygons;

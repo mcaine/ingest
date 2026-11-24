@@ -40,7 +40,7 @@ public class WatercourseLinkProcessor implements Processor {
             .filter(el -> el.getDeclaredType().equals(LineStringType.class))
             .map(e -> (LineStringType) e.getValue());
 
-        LineString lineString = lineStringType.map(l -> Util.convertLineString(l)).orElse(null);
+        LineString lineString = lineStringType.map(l -> Util.convertLineString(l, Util.OS_SRID)).orElse(null);
 
         String title = clg.flatMap(c -> Optional.ofNullable(c.getTitle())).orElse(null);
 
