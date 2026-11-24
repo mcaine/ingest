@@ -2,6 +2,7 @@ package com.mikeycaine.ingest.openrivers;
 
 import com.mikeycaine.ingest.config.FileEndpointUris;
 import com.mikeycaine.ingest.config.IngestInputProperties;
+import com.mikeycaine.ingest.config.IngestRouteProperties;
 import lombok.RequiredArgsConstructor;
 import net.opengis.gml._3.FeaturePropertyType;
 import org.apache.camel.builder.RouteBuilder;
@@ -22,6 +23,7 @@ public class OpenRiversRoutes extends RouteBuilder {
     private final WatercourseLinkProcessor watercourseLinkProcessor;
     private final HydroNodeProcessor hydroNodeProcessor;
     private final IngestInputProperties input;
+    private final IngestRouteProperties routes;
 
     private static final Namespaces NAMESPACES =
         new Namespaces("os", "http://namespaces.os.uk/product/1.0");
@@ -31,7 +33,7 @@ public class OpenRiversRoutes extends RouteBuilder {
         IngestInputProperties.OpenRivers rivers = input.openRivers();
         from(FileEndpointUris.withFileName(rivers.directory(), rivers.fileName(), Map.of("noop", true)))
             .routeId("OpenRivers")
-            .autoStartup(false)
+            .autoStartup(routes.openRivers())
             .log("OpenRivers ${file:path}")
             .split().xtokenize("//os:featureMember", 'i', NAMESPACES)
             .streaming()

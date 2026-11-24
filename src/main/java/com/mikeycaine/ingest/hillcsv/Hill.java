@@ -1,5 +1,7 @@
 package com.mikeycaine.ingest.hillcsv;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,8 @@ import lombok.ToString;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.locationtech.jts.geom.Point;
+
 import java.util.Map;
 
 import static com.mikeycaine.ingest.RecordUtils.*;
@@ -103,6 +107,22 @@ public class Hill {
     // Longitude
     @Getter @Setter
     private Float longitude;
+
+    // OS (Ordnance Survey) Location
+    @Column(name = "osLocation", nullable = false, columnDefinition="Geometry")
+    @Getter
+    @Setter
+    @JsonIgnore
+    private Point osLocation;
+
+    // OS (Ordnance Survey) Location
+    @Column(name = "wgs84Location", nullable = false, columnDefinition="Geometry")
+    @Getter
+    @Setter
+    @JsonIgnore
+    private Point wgs84Location;
+
+
 
     // GridrefXY
     // _Section

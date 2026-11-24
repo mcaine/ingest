@@ -2,6 +2,7 @@ package com.mikeycaine.ingest.openmaplocal;
 
 import com.mikeycaine.ingest.config.FileEndpointUris;
 import com.mikeycaine.ingest.config.IngestInputProperties;
+import com.mikeycaine.ingest.config.IngestRouteProperties;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -23,6 +24,7 @@ public class OpenMapLocalRoutes extends RouteBuilder {
     private final RailwayTrackProcessor railwayTrackProcessor;
     private final RailwayTunnelProcessor railwayTunnelProcessor;
     private final IngestInputProperties input;
+    private final IngestRouteProperties routes;
 
     private static final Namespaces NAMESPACES =
         new Namespaces("os", "http://namespaces.os.uk/product/1.0");
@@ -33,7 +35,7 @@ public class OpenMapLocalRoutes extends RouteBuilder {
         from(FileEndpointUris.directoryOnly(openMapLocal.directory(),
                 Map.of("noop", true, "recursive", true)))
             .routeId("Open Map Local")
-            .autoStartup(false)
+            .autoStartup(routes.openMapLocal())
             .log("Open Map Local ${file:path}")
             .split().xtokenize("//os:featureMember", 'i', NAMESPACES)
             .streaming()

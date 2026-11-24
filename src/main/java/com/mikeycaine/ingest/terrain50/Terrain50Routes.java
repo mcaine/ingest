@@ -2,6 +2,7 @@ package com.mikeycaine.ingest.terrain50;
 
 import com.mikeycaine.ingest.config.FileEndpointUris;
 import com.mikeycaine.ingest.config.IngestInputProperties;
+import com.mikeycaine.ingest.config.IngestRouteProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.zipfile.ZipSplitter;
@@ -16,6 +17,7 @@ public class Terrain50Routes extends RouteBuilder {
 
     private final Terrain50DataProcessor terrain50DataProcessor;
     private final IngestInputProperties input;
+    private final IngestRouteProperties routes;
 
     @Override
     public void configure() throws Exception {
@@ -23,7 +25,7 @@ public class Terrain50Routes extends RouteBuilder {
         from(FileEndpointUris.directoryOnly(terrain50.directory(),
                 Map.of("noop", true, "recursive", true)))
             .routeId("Terrain50")
-            .autoStartup(false)
+            .autoStartup(routes.terrain50())
             .idempotentConsumer(
                 header("CamelFileName"),
                 MemoryIdempotentRepository.memoryIdempotentRepository(10000))

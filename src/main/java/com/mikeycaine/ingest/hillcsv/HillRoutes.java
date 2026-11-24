@@ -2,6 +2,7 @@ package com.mikeycaine.ingest.hillcsv;
 
 import com.mikeycaine.ingest.config.FileEndpointUris;
 import com.mikeycaine.ingest.config.IngestInputProperties;
+import com.mikeycaine.ingest.config.IngestRouteProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.Message;
 import org.apache.camel.builder.RouteBuilder;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class HillRoutes extends RouteBuilder {
 
     private final IngestInputProperties input;
+    private final IngestRouteProperties routes;
 
     @Override
     public void configure() throws Exception {
@@ -24,7 +26,7 @@ public class HillRoutes extends RouteBuilder {
         IngestInputProperties.Hills hills = input.hills();
         from(FileEndpointUris.withFileName(hills.directory(), hills.fileName(), Map.of("noop", true)))
             .routeId("British Hills Database")
-            .autoStartup(false)
+            .autoStartup(routes.hills())
             .unmarshal().csv()
             .split(body())
             .process(exchange -> {

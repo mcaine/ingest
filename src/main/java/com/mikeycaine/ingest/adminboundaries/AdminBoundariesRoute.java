@@ -2,6 +2,7 @@ package com.mikeycaine.ingest.adminboundaries;
 
 import com.mikeycaine.ingest.config.FileEndpointUris;
 import com.mikeycaine.ingest.config.IngestInputProperties;
+import com.mikeycaine.ingest.config.IngestRouteProperties;
 import jakarta.xml.bind.JAXBContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -18,6 +19,7 @@ public class AdminBoundariesRoute extends RouteBuilder {
 
     private final AdminUnitService adminUnitService;
     private final IngestInputProperties input;
+    private final IngestRouteProperties routes;
 
     @Override
     public void configure() throws Exception {
@@ -31,7 +33,7 @@ public class AdminBoundariesRoute extends RouteBuilder {
         IngestInputProperties.AdminBoundaries admin = input.adminBoundaries();
         from(FileEndpointUris.withFileName(admin.directory(), admin.fileName(), Map.of("noop", true)))
             .routeId("AdministrativeUnit")
-            .autoStartup(false)
+            .autoStartup(routes.adminBoundaries())
             .split().xtokenize("//au:AdministrativeUnit", 'i', namespaces)
             .streaming()
             .unmarshal(jaxbDataFormat)
